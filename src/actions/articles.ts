@@ -6,6 +6,27 @@ import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { auth } from '@/auth'
 import { slugify } from '@/lib/utils'
+import { uploadImage, deleteImage } from '@/lib/blob-storage'
+
+async function resolveImageUrl(
+  formData: FormData,
+  existingUrl: string | null | undefined
+): Promise<string | null> {
+  const file = formData.get('image') as File | null
+  const deleted = formData.get('imageDeleted') === 'true'
+
+  if (file && file.size > 0) {
+    if (existingUrl) await deleteImage(existingUrl)
+    return uploadImage(file, file.type || 'image/jpeg', 'artikelen')
+  }
+
+  if (deleted) {
+    if (existingUrl) await deleteImage(existingUrl)
+    return null
+  }
+
+  return existingUrl ?? null
+}
 
 export async function createArticle(formData: FormData) {
   const session = await auth()
@@ -15,12 +36,12 @@ export async function createArticle(formData: FormData) {
   const content = formData.get('content') as string
   const excerpt = formData.get('excerpt') as string | null
   const category = formData.get('category') as string | null
-  const imageUrl = formData.get('imageUrl') as string | null
   const published = formData.get('published') === 'true'
 
   if (!title || !content) throw new Error('Titel en inhoud zijn verplicht')
 
   const slug = slugify(title)
+  const imageUrl = await resolveImageUrl(formData, null)
 
   await db.insert(articles).values({
     title,
@@ -28,7 +49,7 @@ export async function createArticle(formData: FormData) {
     content,
     excerpt: excerpt || null,
     category: category || 'nieuws',
-    imageUrl: imageUrl || null,
+    imageUrl,
     published,
     publishedAt: published ? new Date() : null,
     authorId: parseInt(session.user.id),
@@ -46,8 +67,14 @@ export async function updateArticle(id: number, formData: FormData) {
   const content = formData.get('content') as string
   const excerpt = formData.get('excerpt') as string | null
   const category = formData.get('category') as string | null
-  const imageUrl = formData.get('imageUrl') as string | null
   const published = formData.get('published') === 'true'
+
+  const [existing] = await db
+    .select({ imageUrl: articles.imageUrl })
+    .from(articles)
+    .where(eq(articles.id, id))
+
+  const imageUrl = await resolveImageUrl(formData, existing?.imageUrl)
 
   await db
     .update(articles)
@@ -56,7 +83,7 @@ export async function updateArticle(id: number, formData: FormData) {
       content,
       excerpt: excerpt || null,
       category: category || 'nieuws',
-      imageUrl: imageUrl || null,
+      imageUrl,
       published,
       publishedAt: published ? new Date() : null,
       updatedAt: new Date(),
@@ -70,6 +97,13 @@ export async function updateArticle(id: number, formData: FormData) {
 export async function deleteArticle(id: number) {
   const session = await auth()
   if (!session) throw new Error('Niet ingelogd')
+
+  const [existing] = await db
+    .select({ imageUrl: articles.imageUrl })
+    .from(articles)
+    .where(eq(articles.id, id))
+
+  if (existing?.imageUrl) await deleteImage(existing.imageUrl)
 
   await db.delete(articles).where(eq(articles.id, id))
 

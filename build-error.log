@@ -1,88 +1,28 @@
 ﻿ Â»   Warning: --build is now the default and can safely be omitted.
-â€‹
-Netlify Build                                                 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-â€‹
-> Version
-  @netlify/build 35.5.14
-â€‹
-> Flags
-  accountId: 6582b30ce42df3120c0de560
-  deployId: 69cbdaaaa2e5a318ac185d29
-â€‹
-> Current directory
-  C:\gary\_CURSOR\alemskerkje
-â€‹
-> Config file
-  C:\gary\_CURSOR\alemskerkje\netlify.toml
-â€‹
-> Context
-  production
-â€‹
-> Installing extensions
-   - neon
-â€‹
-Dependencies installation error                               
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-â€‹
-  Error message
-  Error while installing dependencies in C:\gary\_CURSOR\alemskerkje\.netlify\plugins\
-  npm warn cleanup Failed to remove some directories [
-  npm warn cleanup   [
-  npm warn cleanup     '\\\\?\\C:\\gary\\_CURSOR\\alemskerkje\\.netlify\\plugins\\node_modules\\date-fns',
-  npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir 'C:\gary\_CURSOR\alemskerkje\.netlify\plugins\node_modules\date-fns\locale\sr\_lib'] {
-  npm warn cleanup       errno: -4051,
-  npm warn cleanup       code: 'ENOTEMPTY',
-  npm warn cleanup       syscall: 'rmdir',
-  npm warn cleanup       path: 'C:\\gary\\_CURSOR\\alemskerkje\\.netlify\\plugins\\node_modules\\date-fns\\locale\\sr\\_lib'
-  npm warn cleanup     }
-  npm warn cleanup   ],
-  npm warn cleanup   [
-  npm warn cleanup     'C:\\gary\\_CURSOR\\alemskerkje\\.netlify\\plugins\\node_modules\\date-fns',
-  npm warn cleanup     [Error: EPERM: operation not permitted, rmdir 'C:\gary\_CURSOR\alemskerkje\.netlify\plugins\node_modules\date-fns\parse\_lib\parsers'] {
-  npm warn cleanup       errno: -4048,
-  npm warn cleanup       code: 'EPERM',
-  npm warn cleanup       syscall: 'rmdir',
-  npm warn cleanup       path: 'C:\\gary\\_CURSOR\\alemskerkje\\.netlify\\plugins\\node_modules\\date-fns\\parse\\_lib\\parsers'
-  npm warn cleanup     }
-  npm warn cleanup   ],
-  npm warn cleanup   [
-  npm warn cleanup     'C:\\gary\\_CURSOR\\alemskerkje\\.netlify\\plugins\\node_modules\\sucrase',
-  npm warn cleanup     [Error: EPERM: operation not permitted, rmdir 'C:\gary\_CURSOR\alemskerkje\.netlify\plugins\node_modules\sucrase\dist\types\parser\plugins\jsx'] {
-  npm warn cleanup       errno: -4048,
-  npm warn cleanup       code: 'EPERM',
-  npm warn cleanup       syscall: 'rmdir',
-  npm warn cleanup       path: 'C:\\gary\\_CURSOR\\alemskerkje\\.netlify\\plugins\\node_modules\\sucrase\\dist\\types\\parser\\plugins\\jsx'
-  npm warn cleanup     }
-  npm warn cleanup   ]
-  npm warn cleanup ]
-  npm error code ENOTEMPTY
-  npm error syscall rmdir
-  npm error path C:\gary\_CURSOR\alemskerkje\.netlify\plugins\node_modules\date-fns\fp
-  npm error errno -4051
-  npm error ENOTEMPTY: directory not empty, rmdir 'C:\gary\_CURSOR\alemskerkje\.netlify\plugins\node_modules\date-fns\fp'
-â€‹
-  Resolved config
-  build:
-    base: C:\gary\_CURSOR\alemskerkje
-    command: npm run build
-    commandOrigin: config
-    environment:
-      - NODE_VERSION
-      - NPM_VERSION
-    publish: C:\gary\_CURSOR\alemskerkje\.next
-    publishOrigin: config
-  headers:
-    - for: /_next/static/*
-      values:
-        Cache-Control: public, max-age=31536000, immutable
-    - for: /favicon.ico
-      values:
-        Cache-Control: public, max-age=86400
-  headersOrigin: config
-  plugins:
-    - inputs: {}
-      origin: config
-      package: "@netlify/plugin-nextjs"
- Â»   Error: Error while running build
+
+â¬¥ Deployments are "locked" for production context of this project
+
+
+To override deployment lock (USE WITH CAUTION), use:
+  netlify deploy --create-site <SITE_NAME> --prod-if-unlocked
+
+Warning: Only use --prod-if-unlocked if you are absolutely sure you want to override the deployment lock.
+
+? Would you like to "unlock" deployments for production context to proceed? 
+(y/N) [1A[6D[82CWarning: Detected unsettled top-level await at file:///C:/Users/gary.wenneker/AppData/Roaming/nvm/v24.13.0/node_modules/netlify-cli/bin/run.js:66
+await main()
+^
+
+
+
+[1B Â»   Error: Netlify CLI has terminated unexpectedly
+This is a problem with the Netlify CLI, not with your application.
+If you recently updated the CLI, consider reverting to an older version by running:
+
+npm install -g netlify-cli@VERSION
+
+You can use any version from https://ntl.fyi/cli-versions.
+
+Please report this problem at https://ntl.fyi/cli-error including the error details below.
+
 

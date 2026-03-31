@@ -71,7 +71,7 @@ export default async function HomePage() {
         {/* Foto van het Alems Kerkje met Ken Burns zoom-animatie */}
         <div className="absolute inset-0 hero-kenburns">
           <img
-            src="/images/church-hero.jpg"
+            src="/api/images/static/church-hero.jpg"
             alt="Het Alems Kerkje"
             className="w-full h-full object-cover object-center"
           />
@@ -274,10 +274,10 @@ export default async function HomePage() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {[
-              { src: '/images/church-exterior.jpg', alt: 'Exterieur', caption: 'Voorgevel' },
-              { src: '/images/church-north.jpg', alt: 'Noordkant', caption: 'Noordzijde' },
-              { src: '/images/church-southwest.jpg', alt: 'Zuidwestkant', caption: 'Zuidwest aanzicht' },
-              { src: '/images/church-2010.jpg', alt: 'Kerkje 2010', caption: 'Historisch overzicht' },
+              { src: '/api/images/static/church-exterior.jpg', alt: 'Exterieur', caption: 'Voorgevel' },
+              { src: '/api/images/static/church-north.jpg', alt: 'Noordkant', caption: 'Noordzijde' },
+              { src: '/api/images/static/church-southwest.jpg', alt: 'Zuidwestkant', caption: 'Zuidwest aanzicht' },
+              { src: '/api/images/static/church-2010.jpg', alt: 'Kerkje 2010', caption: 'Historisch overzicht' },
             ].map((foto) => (
               <div key={foto.src} className="group relative overflow-hidden aspect-square bg-stone-800">
                 <img

@@ -92,7 +92,7 @@ Remove-Item -Force          "tsconfig.tsbuildinfo" -ErrorAction SilentlyContinue
 # Gebruik robocopy /MIR als fallback voor de plugins-map (lange paden + locks).
 Remove-Item -Recurse -Force ".netlify" -ErrorAction SilentlyContinue
 if (Test-Path ".netlify") {
-    Write-Host "  [CLEAN] .netlify niet volledig verwijderd — robocopy fallback..." -ForegroundColor DarkYellow
+    Write-Host "  [CLEAN] .netlify niet volledig verwijderd -- robocopy fallback..." -ForegroundColor DarkYellow
     $emptyDir = Join-Path $env:TEMP ("empty_" + [Guid]::NewGuid().ToString("n"))
     New-Item -ItemType Directory -Path $emptyDir -Force | Out-Null
     $null = robocopy $emptyDir ".netlify" /MIR /R:2 /W:1 /NFL /NDL /NJH /NJS 2>&1
@@ -112,6 +112,50 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host $linkOutput
     exit 1
 }
+
+# Ontgrendel ALLE vergrendelde productie-deploys (anders crasht de CLI met een interactieve prompt)
+try {
+    $netlifyConfigPath = Join-Path $env:APPDATA "netlify\Config\config.json"
+    if (Test-Path $netlifyConfigPath) {
+        $netlifyConfig = Get-Content $netlifyConfigPath | ConvertFrom-Json
+        $authToken     = $netlifyConfig.users.PSObject.Properties.Value[0].auth.token
+        if ($authToken) {
+            $headers = @{ Authorization = "Bearer $authToken" }
+
+            # Site ID: direct uit de bekende configuratie (meest betrouwbaar)
+            $resolvedSiteId = $null
+            $stateFile = Join-Path $projectRoot ".netlify\state.json"
+            if (Test-Path $stateFile) {
+                $stateJson = Get-Content $stateFile -Raw | ConvertFrom-Json
+                $resolvedSiteId = $stateJson.siteId
+            }
+            if (-not $resolvedSiteId) {
+                $siteList = Invoke-RestMethod "https://api.netlify.com/api/v1/sites?name=$siteName&per_page=10" -Headers $headers -ErrorAction SilentlyContinue
+                $resolvedSiteId = ($siteList | Where-Object { $_.name -eq $siteName } | Select-Object -First 1).id
+            }
+
+            if ($resolvedSiteId) {
+                # Haal meer deploys op en ontgrendel ALLE vergrendelde productie-deploys
+                $deploys = Invoke-RestMethod "https://api.netlify.com/api/v1/sites/$resolvedSiteId/deploys?per_page=20" -Headers $headers -ErrorAction SilentlyContinue
+                $lockedDeploys = @($deploys | Where-Object { $_.context -eq "production" -and $_.locked })
+                if ($lockedDeploys.Count -gt 0) {
+                    foreach ($d in $lockedDeploys) {
+                        Write-Host "  [UNLOCK] Ontgrendelen deploy $($d.id)..." -ForegroundColor DarkYellow
+                        Invoke-RestMethod "https://api.netlify.com/api/v1/deploys/$($d.id)/unlock" -Method POST -Headers $headers -ErrorAction SilentlyContinue | Out-Null
+                    }
+                    Write-Host "  [UNLOCK] $($lockedDeploys.Count) deploy(s) ontgrendeld" -ForegroundColor Green
+                } else {
+                    Write-Host "  [UNLOCK] Geen vergrendelde deploys gevonden" -ForegroundColor Gray
+                }
+            } else {
+                Write-Host "  [UNLOCK] Site ID niet gevonden; overgeslagen" -ForegroundColor Gray
+            }
+        }
+    }
+} catch {
+    Write-Host "  [WAARSCHUWING] Ontgrendelen mislukt: $($_.Exception.Message)" -ForegroundColor Yellow
+}
+
 Write-Host "OK: Clean + link klaar" -ForegroundColor Green
 Write-Host ""
 

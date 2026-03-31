@@ -5,16 +5,19 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "node -e \"require('fs').cpSync('.next/static', '.next/_next/static', {recursive: true})\"",
     "start": "next start",
     "lint": "next lint",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "seed": "node --env-file=.env.local --import tsx src/scripts/seed.ts"
+    "seed": "node --env-file=.env.local --import tsx src/scripts/seed.ts",
+    "seed:images": "node --env-file=.env.local --import tsx src/scripts/seed-blob-images.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",
+    "@netlify/blobs": "^10.7.4",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.40.1",
