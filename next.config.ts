@@ -1,8 +1,24 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // Neon serverless driver requires this for edge runtime compatibility
+  transpilePackages: ['clsx', 'tailwind-merge'],
   serverExternalPackages: ['@neondatabase/serverless', '@netlify/blobs'],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.hetalemskerkje.nl',
+      },
+    ],
+  },
 }
 
 export default nextConfig

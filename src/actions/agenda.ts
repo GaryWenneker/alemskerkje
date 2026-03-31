@@ -30,31 +30,54 @@ async function resolveImageUrl(
   return existingUrl ?? null
 }
 
+function toSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+}
+
 export async function createAgendaItem(formData: FormData) {
   const session = await getSession()
   if (!session) throw new Error('Niet ingelogd')
 
   const title = formData.get('title') as string
   const description = formData.get('description') as string | null
+  const content = formData.get('content') as string | null
   const date = formData.get('date') as string
   const timeStart = formData.get('timeStart') as string | null
   const timeEnd = formData.get('timeEnd') as string | null
   const location = formData.get('location') as string | null
+  const videoUrl = formData.get('videoUrl') as string | null
+  const videoType = formData.get('videoType') as string | null
+  const ticketUrl = formData.get('ticketUrl') as string | null
   const published = formData.get('published') === 'true'
+  const featured = formData.get('featured') === 'true'
+  const slugInput = (formData.get('slug') as string | null)?.trim()
 
   if (!title || !date) throw new Error('Titel en datum zijn verplicht')
 
   const imageUrl = await resolveImageUrl(formData, null)
+  const slug = slugInput || toSlug(title)
 
   await db.insert(agendaItems).values({
+    slug,
     title,
     description: description || null,
+    content: content || null,
     date: new Date(date),
     timeStart: timeStart || null,
     timeEnd: timeEnd || null,
     location: location || 'Het Alems Kerkje, Sint Odradastraat 12, Alem',
     imageUrl,
+    videoUrl: videoUrl || null,
+    videoType: videoType || null,
+    ticketUrl: ticketUrl || null,
     published,
+    featured,
     authorId: parseInt(session.id),
   })
 
@@ -69,11 +92,17 @@ export async function updateAgendaItem(id: number, formData: FormData) {
 
   const title = formData.get('title') as string
   const description = formData.get('description') as string | null
+  const content = formData.get('content') as string | null
   const date = formData.get('date') as string
   const timeStart = formData.get('timeStart') as string | null
   const timeEnd = formData.get('timeEnd') as string | null
   const location = formData.get('location') as string | null
+  const videoUrl = formData.get('videoUrl') as string | null
+  const videoType = formData.get('videoType') as string | null
+  const ticketUrl = formData.get('ticketUrl') as string | null
   const published = formData.get('published') === 'true'
+  const featured = formData.get('featured') === 'true'
+  const slugInput = (formData.get('slug') as string | null)?.trim()
 
   const [existing] = await db
     .select({ imageUrl: agendaItems.imageUrl })
@@ -85,14 +114,20 @@ export async function updateAgendaItem(id: number, formData: FormData) {
   await db
     .update(agendaItems)
     .set({
+      slug: slugInput || undefined,
       title,
       description: description || null,
+      content: content || null,
       date: new Date(date),
       timeStart: timeStart || null,
       timeEnd: timeEnd || null,
       location: location || null,
       imageUrl,
+      videoUrl: videoUrl || null,
+      videoType: videoType || null,
+      ticketUrl: ticketUrl || null,
       published,
+      featured,
       updatedAt: new Date(),
     })
     .where(eq(agendaItems.id, id))

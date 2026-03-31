@@ -1,6 +1,6 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import VideoBlock from '@/components/VideoBlock'
+import EventVideoHero from '@/components/EventVideoHero'
 import Link from 'next/link'
 import { db } from '@/db'
 import { agendaItems } from '@/db/schema'
@@ -36,40 +36,28 @@ async function getUpcomingEvents() {
 
 const activiteitenItems = [
   {
-    icon: '💒',
-    title: 'Huwelijksceremonie',
-    description:
-      'Trouw op een locatie met ziel. De intieme sfeer van een kerk uit 1719 als decor voor jullie mooiste dag.',
-  },
-  {
-    icon: '🎶',
-    title: 'Concerten',
-    description:
-      'Akoestisch meesterwerkje. Kleinschalige concerten met een uitzonderlijke akoestiek in een historische setting.',
-  },
-  {
-    icon: '🖼️',
+    image: '/images/activiteiten/tentoonstellingen.jpg',
     title: 'Tentoonstellingen',
     description:
       'Kunst, fotografie, erfgoed of natuur. De stenen muren vertellen al drie eeuwen verhalen — laat uw werk het volgende hoofdstuk schrijven.',
   },
   {
-    icon: '🧘',
+    image: '/images/activiteiten/huwelijksceremonie.jpg',
+    title: 'Huwelijksceremonie',
+    description:
+      'Trouw op een locatie met ziel. De intieme sfeer van een kerk uit 1719 als decor voor jullie mooiste dag.',
+  },
+  {
+    image: '/images/activiteiten/concerten.jpg',
+    title: 'Concerten',
+    description:
+      'Akoestisch meesterwerkje. Kleinschalige concerten met een uitzonderlijke akoestiek in een historische setting.',
+  },
+  {
+    image: '/images/activiteiten/cursussen.jpg',
     title: 'Cursussen & Workshops',
     description:
       'Yoga, zang, mindfulness of schilderen. Leer, groei en ervaar in een omgeving die rust en inspiratie uitstraalt.',
-  },
-  {
-    icon: '🎤',
-    title: 'Lezingen',
-    description:
-      'Intieme setting voor een krachtige boodschap. Ideaal voor literatuur, erfgoed en culturele sprekers.',
-  },
-  {
-    icon: '🥂',
-    title: 'Privé evenementen',
-    description:
-      'Jubileum, familiebijeenkomst of bedrijfsevenement. We denken graag met u mee voor uw unieke moment.',
   },
 ]
 
@@ -150,67 +138,21 @@ export default async function HomePage() {
 
       {/* ── UITGELICHT VIDEO-EVENEMENT ── */}
       {featuredVideo?.videoUrl && featuredVideo.videoType && (
-        <section className="py-16 px-6 border-b border-stone-800/50">
+        <section className="border-b border-stone-800/50">
           <div className="max-w-7xl mx-auto">
-            {/* Video — zelfde breedte als de overige content */}
-            <VideoBlock
-              videoUrl={featuredVideo.videoUrl}
-              videoType={featuredVideo.videoType as 'youtube' | 'vimeo' | 'direct'}
-              title={featuredVideo.title}
-            />
-
-            {/* Info-balk onder de video: geen aparte bg, vloeit in het donkere design */}
-            <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-5 border-t border-stone-800/60 pt-6">
-              <div className="flex flex-wrap gap-6">
-                <div>
-                  <p className="text-xs tracking-widest uppercase text-stone-500 mb-1">Datum</p>
-                  <p className="text-stone-200 text-sm capitalize">
-                    {new Intl.DateTimeFormat('nl-NL', {
-                      weekday: 'long',
-                      day: 'numeric',
-                      month: 'long',
-                    }).format(new Date(featuredVideo.date))}
-                  </p>
-                </div>
-
-                {(featuredVideo.timeStart || featuredVideo.timeEnd) && (
-                  <div>
-                    <p className="text-xs tracking-widest uppercase text-stone-500 mb-1">Tijd</p>
-                    <p className="text-amber-400 text-sm">
-                      {featuredVideo.timeStart}
-                      {featuredVideo.timeEnd && (
-                        <span className="text-stone-500"> – {featuredVideo.timeEnd}</span>
-                      )}
-                    </p>
-                  </div>
-                )}
-
-                {featuredVideo.location && (
-                  <div>
-                    <p className="text-xs tracking-widest uppercase text-stone-500 mb-1">Locatie</p>
-                    <p className="text-stone-200 text-sm">{featuredVideo.location}</p>
-                  </div>
-                )}
-              </div>
-
-              <div className="flex items-center gap-3 shrink-0">
-                {featuredVideo.ticketUrl && (
-                  <a
-                    href={featuredVideo.ticketUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-gold"
-                  >
-                    Kaarten bestellen
-                  </a>
-                )}
-                {featuredVideo.slug && (
-                  <Link href={`/agenda/${featuredVideo.slug}`} className="btn-ghost">
-                    Meer info
-                  </Link>
-                )}
-              </div>
-            </div>
+          <EventVideoHero
+            title={featuredVideo.title}
+            videoUrl={featuredVideo.videoUrl}
+            videoType={featuredVideo.videoType as 'youtube' | 'vimeo' | 'direct'}
+            date={new Date(featuredVideo.date)}
+            timeStart={featuredVideo.timeStart}
+            timeEnd={featuredVideo.timeEnd}
+            location={featuredVideo.location}
+            ticketUrl={featuredVideo.ticketUrl}
+            slug={featuredVideo.slug}
+            description={featuredVideo.description}
+            content={featuredVideo.content}
+          />
           </div>
         </section>
       )}
@@ -218,22 +160,41 @@ export default async function HomePage() {
       {/* ── ACTIVITEITEN ── */}
       <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="section-label">Verhuur & gebruik</p>
+          <div className="text-center mb-10">
+            <p className="section-label">Veel soorten</p>
             <h2 className="font-serif text-3xl md:text-4xl text-white mb-4">
-              Een locatie voor elk bijzonder moment
+              Activiteiten
             </h2>
+            <p className="text-stone-400 max-w-xl mx-auto text-sm leading-relaxed mb-4">
+              Het Alems Kerkje wordt op aanvraag verhuurd voor sociaal-culturele activiteiten.
+              Bekijk de mogelijkheden die wij op deze prachtige locatie bieden.
+            </p>
             <span className="gold-line" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
             {activiteitenItems.map((item) => (
-              <div key={item.title} className="card-dark p-8 group">
-                <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="font-serif text-xl text-white mb-3 group-hover:text-amber-300 transition-colors">
-                  {item.title}
-                </h3>
-                <p className="text-stone-400 text-sm leading-relaxed">{item.description}</p>
+              <div key={item.title} className="relative overflow-hidden group aspect-[3/4]">
+                {/* Foto */}
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                {/* Donkere overlay altijd aanwezig, sterker bij hover */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent
+                                group-hover:via-black/50 transition-all duration-500" />
+                {/* Tekst onderaan */}
+                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                  <h3 className="font-serif text-xl text-white mb-2
+                                 [text-shadow:0_2px_8px_rgba(0,0,0,0.8)]">
+                    {item.title}
+                  </h3>
+                  <p className="text-stone-300 text-sm leading-relaxed opacity-0 group-hover:opacity-100
+                                transition-opacity duration-500 max-h-0 group-hover:max-h-32 overflow-hidden">
+                    {item.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>

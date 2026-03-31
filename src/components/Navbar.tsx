@@ -1,9 +1,16 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+
+const kerkjeLinks = [
+  { href: '/kerkje/geschiedenis', label: 'Geschiedenis' },
+  { href: '/kerkje/vrienden-van', label: 'Vrienden van' },
+  { href: '/kerkje/sponsoren', label: 'Sponsoren' },
+  { href: '/kerkje/de-stichting', label: 'De Stichting' },
+]
 
 const navLinks = [
   { href: '/agenda', label: 'Agenda' },
@@ -15,7 +22,10 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [kerkjeOpen, setKerkjeOpen] = useState(false)
+  const [kerkjeMobileOpen, setKerkjeMobileOpen] = useState(false)
   const pathname = usePathname()
+  const dropdownRef = useRef<HTMLLIElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -25,7 +35,21 @@ export default function Navbar() {
 
   useEffect(() => {
     setMenuOpen(false)
+    setKerkjeOpen(false)
   }, [pathname])
+
+  // Sluit dropdown bij klik buiten
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setKerkjeOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const isKerkjeActive = pathname.startsWith('/kerkje')
 
   return (
     <header
@@ -49,6 +73,64 @@ export default function Navbar() {
 
         {/* Desktop navigatie */}
         <ul className="hidden md:flex items-center gap-8">
+
+          {/* Het Kerkje dropdown */}
+          <li ref={dropdownRef} className="relative">
+            <button
+              onClick={() => setKerkjeOpen(!kerkjeOpen)}
+              className={cn(
+                'flex items-center gap-1.5 text-xs tracking-[0.15em] uppercase transition-colors duration-200',
+                isKerkjeActive || kerkjeOpen ? 'text-amber-400' : 'text-stone-300 hover:text-white',
+              )}
+              aria-expanded={kerkjeOpen}
+              aria-haspopup="true"
+            >
+              Het Kerkje
+              <svg
+                className={cn('w-3 h-3 transition-transform duration-200', kerkjeOpen && 'rotate-180')}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            {/* Dropdown panel */}
+            <div
+              className={cn(
+                'absolute top-full left-1/2 -translate-x-1/2 mt-3 w-52 bg-stone-950 border border-stone-800 shadow-2xl transition-all duration-200 origin-top',
+                kerkjeOpen ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-95 pointer-events-none',
+              )}
+              role="menu"
+            >
+              {/* Pijltje omhoog */}
+              <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-stone-950 border-l border-t border-stone-800 rotate-45" />
+
+              <ul className="py-2">
+                {kerkjeLinks.map((link) => (
+                  <li key={link.href} role="none">
+                    <Link
+                      href={link.href}
+                      role="menuitem"
+                      className={cn(
+                        'block px-5 py-3 text-xs tracking-[0.15em] uppercase transition-colors',
+                        pathname === link.href
+                          ? 'text-amber-400 bg-amber-600/5'
+                          : 'text-stone-300 hover:text-white hover:bg-stone-900',
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+
+          {/* Overige links */}
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
@@ -64,6 +146,7 @@ export default function Navbar() {
               </Link>
             </li>
           ))}
+
           <li>
             <Link
               href="/contact"
@@ -81,24 +164,9 @@ export default function Navbar() {
           aria-label={menuOpen ? 'Menu sluiten' : 'Menu openen'}
           aria-expanded={menuOpen}
         >
-          <span
-            className={cn(
-              'block w-6 h-px bg-white transition-all duration-300',
-              menuOpen && 'rotate-45 translate-y-2.5',
-            )}
-          />
-          <span
-            className={cn(
-              'block w-6 h-px bg-white transition-all duration-300',
-              menuOpen && 'opacity-0',
-            )}
-          />
-          <span
-            className={cn(
-              'block w-6 h-px bg-white transition-all duration-300',
-              menuOpen && '-rotate-45 -translate-y-2.5',
-            )}
-          />
+          <span className={cn('block w-6 h-px bg-white transition-all duration-300', menuOpen && 'rotate-45 translate-y-2.5')} />
+          <span className={cn('block w-6 h-px bg-white transition-all duration-300', menuOpen && 'opacity-0')} />
+          <span className={cn('block w-6 h-px bg-white transition-all duration-300', menuOpen && '-rotate-45 -translate-y-2.5')} />
         </button>
       </nav>
 
@@ -106,25 +174,66 @@ export default function Navbar() {
       <div
         className={cn(
           'md:hidden overflow-hidden transition-all duration-300',
-          menuOpen ? 'max-h-96 border-b border-stone-800' : 'max-h-0',
+          menuOpen ? 'max-h-screen border-b border-stone-800' : 'max-h-0',
         )}
       >
-        <ul className="px-6 pb-6 pt-2 flex flex-col gap-4">
+        <ul className="px-6 pb-6 pt-2 flex flex-col gap-1">
+
+          {/* Het Kerkje accordion mobiel */}
+          <li>
+            <button
+              onClick={() => setKerkjeMobileOpen(!kerkjeMobileOpen)}
+              className={cn(
+                'flex items-center justify-between w-full py-3 text-sm tracking-widest uppercase transition-colors',
+                isKerkjeActive ? 'text-amber-400' : 'text-stone-300',
+              )}
+              aria-expanded={kerkjeMobileOpen}
+            >
+              <span>Het Kerkje</span>
+              <svg
+                className={cn('w-4 h-4 transition-transform duration-200', kerkjeMobileOpen && 'rotate-180')}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div className={cn('overflow-hidden transition-all duration-300', kerkjeMobileOpen ? 'max-h-64' : 'max-h-0')}>
+              <ul className="pl-4 pb-2 space-y-1 border-l border-stone-800">
+                {kerkjeLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        'block py-2 pl-3 text-sm tracking-wide transition-colors',
+                        pathname === link.href ? 'text-amber-400' : 'text-stone-400 hover:text-white',
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
                 className={cn(
-                  'block text-sm tracking-widest uppercase py-1 transition-colors',
-                  pathname === link.href
-                    ? 'text-amber-400'
-                    : 'text-stone-300 hover:text-white',
+                  'block text-sm tracking-widest uppercase py-3 transition-colors',
+                  pathname === link.href ? 'text-amber-400' : 'text-stone-300 hover:text-white',
                 )}
               >
                 {link.label}
               </Link>
             </li>
           ))}
+
           <li className="pt-2">
             <Link
               href="/contact"

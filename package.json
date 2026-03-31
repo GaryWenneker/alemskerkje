@@ -14,7 +14,8 @@
     "db:studio": "drizzle-kit studio",
     "seed": "node --env-file=.env.local --import tsx src/scripts/seed.ts",
     "seed:images": "node --env-file=.env.local --import tsx src/scripts/seed-blob-images.ts",
-    "seed:kirsty": "node --env-file=.env.local --import tsx src/scripts/seed-kirsty-mcgee.ts"
+    "seed:kirsty": "node --env-file=.env.local --import tsx src/scripts/seed-kirsty-mcgee.ts",
+    "import:agenda": "node --env-file=.env.local --import tsx src/scripts/import-agenda.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",

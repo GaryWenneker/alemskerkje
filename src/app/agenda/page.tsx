@@ -3,7 +3,6 @@ import Footer from '@/components/Footer'
 import { db } from '@/db'
 import { agendaItems } from '@/db/schema'
 import { eq, asc } from 'drizzle-orm'
-import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 
@@ -69,7 +68,6 @@ export default async function AgendaPage() {
           ) : (
             <div className="space-y-px">
               {events.map((event) => {
-                const hasDetail = Boolean(event.slug)
                 const hasMedia = event.imageUrl || event.videoUrl
 
                 const CardContent = (
@@ -147,37 +145,14 @@ export default async function AgendaPage() {
                           )}
                         </>
                       )}
-                      {hasDetail && (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          className="w-4 h-4 text-stone-600 group-hover:text-amber-500 transition-colors ml-auto mt-2"
-                          aria-hidden="true"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      )}
                     </div>
                   </>
                 )
 
                 const sharedClass =
-                  'group grid grid-cols-1 sm:grid-cols-[100px_auto_1fr_auto] md:grid-cols-[100px_auto_1fr_auto] gap-4 md:gap-6 items-center p-6 md:p-8 border border-stone-800/50 transition-all duration-200'
+                  'grid grid-cols-1 sm:grid-cols-[100px_auto_1fr_auto] md:grid-cols-[100px_auto_1fr_auto] gap-4 md:gap-6 items-center p-6 md:p-8 border border-stone-800/50'
 
-                return hasDetail ? (
-                  <Link
-                    key={event.id}
-                    href={`/agenda/${event.slug}`}
-                    className={`${sharedClass} hover:border-amber-600/30 hover:bg-stone-900/30`}
-                  >
-                    {CardContent}
-                  </Link>
-                ) : (
+                return (
                   <article key={event.id} className={sharedClass}>
                     {CardContent}
                   </article>

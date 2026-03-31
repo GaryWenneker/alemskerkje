@@ -81,30 +81,114 @@ export default function AgendaEditForm({ event }: Props) {
       </div>
 
       <div>
-        <label htmlFor="e-description" className="block text-sm font-medium text-gray-700 mb-1">Beschrijving</label>
+        <label htmlFor="e-description" className="block text-sm font-medium text-gray-700 mb-1">Korte beschrijving (inleiding)</label>
         <textarea
           id="e-description"
           name="description"
-          rows={4}
+          rows={3}
           defaultValue={event.description ?? ''}
           className="w-full border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:border-amber-500"
         />
       </div>
 
+      <div>
+        <label htmlFor="e-content" className="block text-sm font-medium text-gray-700 mb-1">Volledige tekst (HTML)</label>
+        <textarea
+          id="e-content"
+          name="content"
+          rows={8}
+          defaultValue={event.content ?? ''}
+          className="w-full border border-gray-300 px-3 py-2 text-sm font-mono focus:outline-none focus:border-amber-500"
+          placeholder="<p>Tekst...</p>"
+        />
+      </div>
+
       <ImageUpload name="image" label="Afbeelding" currentUrl={event.imageUrl} />
 
-      <div className="flex items-center gap-3">
-        <input
-          id="e-published"
-          name="published"
-          type="checkbox"
-          value="true"
-          defaultChecked={event.published}
-          className="h-4 w-4 text-amber-600 border-gray-300"
-        />
-        <label htmlFor="e-published" className="text-sm text-gray-700">
-          Gepubliceerd
-        </label>
+      <div className="border-t border-gray-100 pt-4 space-y-4">
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Video</p>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="col-span-2">
+            <label htmlFor="e-video-url" className="block text-sm font-medium text-gray-700 mb-1">Video URL</label>
+            <input
+              id="e-video-url"
+              name="videoUrl"
+              type="url"
+              defaultValue={event.videoUrl ?? ''}
+              className="w-full border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:border-amber-500"
+              placeholder="https://www.youtube.com/watch?v=..."
+            />
+          </div>
+          <div>
+            <label htmlFor="e-video-type" className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+            <select
+              id="e-video-type"
+              name="videoType"
+              defaultValue={event.videoType ?? ''}
+              className="w-full border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:border-amber-500"
+            >
+              <option value="">— kies —</option>
+              <option value="youtube">YouTube</option>
+              <option value="vimeo">Vimeo</option>
+              <option value="direct">Direct (MP4)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t border-gray-100 pt-4 space-y-4">
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Kaarten & overig</p>
+        <div>
+          <label htmlFor="e-ticket-url" className="block text-sm font-medium text-gray-700 mb-1">Ticket URL</label>
+          <input
+            id="e-ticket-url"
+            name="ticketUrl"
+            type="url"
+            defaultValue={event.ticketUrl ?? ''}
+            className="w-full border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:border-amber-500"
+            placeholder="https://weticket.io/..."
+          />
+        </div>
+        <div>
+          <label htmlFor="e-slug" className="block text-sm font-medium text-gray-700 mb-1">Slug (URL-naam)</label>
+          <input
+            id="e-slug"
+            name="slug"
+            type="text"
+            defaultValue={event.slug ?? ''}
+            className="w-full border border-gray-300 px-3 py-2 text-sm font-mono focus:outline-none focus:border-amber-500"
+            placeholder="bijv. kirsty-mcgee-12-april"
+          />
+        </div>
+      </div>
+
+      <div className="border-t border-gray-100 pt-4 flex items-center gap-6">
+        <div className="flex items-center gap-3">
+          <input
+            id="e-published"
+            name="published"
+            type="checkbox"
+            value="true"
+            defaultChecked={event.published}
+            className="h-4 w-4 text-amber-600 border-gray-300"
+          />
+          <label htmlFor="e-published" className="text-sm text-gray-700">
+            Gepubliceerd
+          </label>
+        </div>
+        <div className="flex items-center gap-3">
+          <input
+            id="e-featured"
+            name="featured"
+            type="checkbox"
+            value="true"
+            defaultChecked={event.featured}
+            className="h-4 w-4 text-amber-600 border-gray-300"
+          />
+          <label htmlFor="e-featured" className="text-sm text-gray-700">
+            Uitgelicht (homepage hero)
+          </label>
+        </div>
       </div>
 
       <div className="flex gap-3 pt-2">

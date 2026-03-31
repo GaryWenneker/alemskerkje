@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="bg-stone-950 border-t border-stone-800/50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
           <div>
             <p className="text-xs tracking-[0.3em] uppercase text-amber-500 font-light mb-1">Het</p>
@@ -15,9 +15,9 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Navigatie */}
+          {/* Pagina's */}
           <div>
-            <h3 className="text-xs tracking-[0.2em] uppercase text-stone-500 mb-4">Navigatie</h3>
+            <h3 className="text-xs tracking-[0.2em] uppercase text-stone-500 mb-4">Pagina&apos;s</h3>
             <ul className="space-y-2">
               {[
                 { href: '/agenda', label: 'Agenda' },
@@ -26,10 +26,26 @@ export default function Footer() {
                 { href: '/contact', label: 'Contact & Reservering' },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-stone-400 hover:text-amber-400 text-sm transition-colors"
-                  >
+                  <Link href={link.href} className="text-stone-400 hover:text-amber-400 text-sm transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Het Kerkje */}
+          <div className="hidden md:block">
+            <h3 className="text-xs tracking-[0.2em] uppercase text-stone-500 mb-4">Het Kerkje</h3>
+            <ul className="space-y-2">
+              {[
+                { href: '/kerkje/geschiedenis', label: 'Geschiedenis' },
+                { href: '/kerkje/vrienden-van', label: 'Vrienden van' },
+                { href: '/kerkje/sponsoren', label: 'Sponsoren' },
+                { href: '/kerkje/de-stichting', label: 'De Stichting' },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-stone-400 hover:text-amber-400 text-sm transition-colors">
                     {link.label}
                   </Link>
                 </li>
