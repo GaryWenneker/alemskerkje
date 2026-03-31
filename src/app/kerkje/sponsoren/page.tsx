@@ -13,57 +13,57 @@ const sponsoren = [
     naam: 'Oranje Fonds',
     categorie: 'Maatschappelijk fonds',
     omschrijving: 'Het Oranje Fonds steunt initiatieven die mensen met elkaar verbinden en de sociale samenhang in Nederland versterken.',
-    logo: 'https://www.hetalemskerkje.nl/wp-content/uploads/2024/01/OranjeFonds_logo_CMYK-2021-zonder-payoff.png',
+    logo: '/logos/oranje-fonds.jpg',
     website: 'https://www.oranjefonds.nl',
   },
   {
     naam: 'VSB Fonds',
     categorie: 'Sociaal fonds',
     omschrijving: 'VSBfonds heeft een sociale, inclusieve en creatieve samenleving voor ogen — een samenleving waarin mensen met verschillende achtergronden elkaar ontmoeten en inspireren.',
-    logo: 'https://www.hetalemskerkje.nl/wp-content/uploads/2024/01/vsb-fonds.png',
+    logo: '/logos/vsb-fonds.png',
     website: 'https://www.vsbfonds.nl',
   },
   {
     naam: 'Sociaal Cultureel Fonds Maasdriel',
     categorie: 'Lokaal fonds',
     omschrijving: 'Fonds ter bevordering van sociaal-culturele activiteiten in Alem, Hoenzadriel, Kerkdriel en Velddriel.',
-    logo: 'https://www.hetalemskerkje.nl/wp-content/uploads/2024/01/sociaal-cultureelfonds-maasdriel.png',
+    logo: '/logos/scfm.png',
     website: 'https://www.scfmaasdriel.nl',
   },
   {
     naam: 'Rabobank Coöperatiefonds',
     categorie: 'Bankfonds',
     omschrijving: 'Een aandeel in elkaar. Het Rabobank Coöperatiefonds steunt lokale initiatieven die de gemeenschap versterken.',
-    logo: 'https://www.hetalemskerkje.nl/wp-content/uploads/2024/01/rabo.png',
+    logo: '/logos/rabo.webp',
     website: 'https://www.rabobank.nl',
   },
   {
     naam: 'Soepenfestival',
     categorie: 'Goede doelen stichting',
     omschrijving: 'Een goede doelen stichting die lokale culturele en maatschappelijke initiatieven ondersteunt.',
-    logo: 'https://www.hetalemskerkje.nl/wp-content/uploads/2024/01/soepenfestival.png',
+    logo: '/logos/soepenfestival.jpeg',
     website: 'https://www.hetalemskerkje.nl',
   },
   {
     naam: 'Duke Vision',
     categorie: 'Webhosting & design',
     omschrijving: 'Webhosting en design partner van Het Alems Kerkje. Duke Vision verzorgt de digitale presentatie van het kerkje.',
-    logo: 'https://www.hetalemskerkje.nl/wp-content/uploads/2024/01/Duke-Vision-Logo.png',
+    logo: '/logos/duke-vision.jpg',
     website: 'https://www.dukevision.nl',
   },
   {
     naam: 'Gemeente Maasdriel',
     categorie: 'Overheid',
     omschrijving: 'Goed idee, doe er iets mee! De Gemeente Maasdriel steunt lokale culturele initiatieven en sociaal-culturele centra.',
-    logo: 'https://www.hetalemskerkje.nl/wp-content/uploads/2024/01/maasdriel.png',
+    logo: '/logos/maasdriel.jpeg',
     website: 'https://www.gemeentemaasdriel.nl',
   },
   {
-    naam: 'e-Boekhouden.nl',
-    categorie: 'Online boekhoudprogramma',
-    omschrijving: 'Het online boekhoudprogramma dat stichtingen en verenigingen helpt met eenvoudige en efficiënte administratie.',
-    logo: 'https://www.hetalemskerkje.nl/wp-content/uploads/2024/01/e-boekhouden.png',
-    website: 'https://www.e-boekhouden.nl',
+    naam: 'CF Crowdfunding',
+    categorie: 'Crowdfunding platform',
+    omschrijving: 'Crowdfunding platform dat maatschappelijke en culturele projecten ondersteunt via burgerbijdragen.',
+    logo: '/logos/cf.jpeg',
+    website: 'https://www.hetalemskerkje.nl',
   },
 ]
 
@@ -92,7 +92,7 @@ export default function SponsorenPage() {
       {/* Sponsoren grid */}
       <section className="bg-stone-950 py-24">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-px bg-stone-800">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-stone-800">
             {sponsoren.map((sponsor) => (
               <a
                 key={sponsor.naam}
@@ -101,20 +101,19 @@ export default function SponsorenPage() {
                 rel="noopener noreferrer"
                 className="group bg-stone-950 p-8 flex flex-col hover:bg-stone-900 transition-colors duration-300"
               >
-                {/* Logo container met uniforme amber-filter */}
+                {/* Logo met uniforme amber kleurstijl */}
                 <div className="h-16 mb-6 flex items-center">
                   <div className="relative h-12 w-full">
                     <Image
                       src={sponsor.logo}
-                      alt={sponsor.naam}
+                      alt={`Logo ${sponsor.naam}`}
                       fill
                       className="object-contain object-left sponsor-logo"
-                      unoptimized
+                      sizes="200px"
                     />
                   </div>
                 </div>
 
-                {/* Fallback naam (zichtbaar als logo laadt) */}
                 <p className="text-xs tracking-[0.25em] uppercase text-amber-500/60 mb-1">{sponsor.categorie}</p>
                 <p className="text-white text-sm font-medium mb-3 group-hover:text-amber-300 transition-colors">{sponsor.naam}</p>
                 <p className="text-stone-500 text-xs leading-relaxed flex-1">{sponsor.omschrijving}</p>
