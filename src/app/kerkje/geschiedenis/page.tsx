@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -13,30 +14,45 @@ const timeline = [
     title: 'Bouw van het kerkje',
     content:
       'Het voormalig Hervormde kerkje in Alem werd in 1719 gebouwd. Voor de bouw is materiaal gebruikt van de oudere katholieke kerk die tijdens een overstroming werd verwoest. Dit kan men nog zien aan de verschillende afmetingen bakstenen die tijdens de bouw zijn gebruikt. Een tekening van Hendrik Verhees uit 1790 toont het kerkje met destijds slechts één raam in de voorgevel.',
+    image: '/images/geschiedenis/tekening-1790.jpg',
+    imageAlt: 'Tekening van Hendrik Verhees uit 1790 – Het Alems Kerkje',
+    imageCaption: 'Tekening door Hendrik Verhees, 1790',
   },
   {
     year: 'Architectuur',
     title: 'De bouwstijl',
     content:
       'Het kerkje wordt omschreven als een bakstenen zaalkerkje met driezijdige sluiting en houten dakruiter. De dakruiter bevat een uurwerk met wijzerplaat. Het gebouw bestaat uit twee verdiepingen en heeft zes hoge ramen. Achter het kerkje ligt een ommuurd kerkhofje met baarhuisje. Het kerkje had meerdere keren te lijden onder oorlogsgeweld — zo werd het bij de inval van de Fransen "van binnen geruïneerd en van predikstoel en banken beroofd."',
+    image: '/images/geschiedenis/kerkje-historisch.jpg',
+    imageAlt: 'Historisch aanzicht van Het Alems Kerkje',
+    imageCaption: 'Historisch aanzicht van het kerkje',
   },
   {
     year: 'WO II',
     title: 'Schade door oorlog',
     content:
       'Ten gevolge van de zware gevechten aan het eind van de Tweede Wereldoorlog raakte het kerkje zwaar beschadigd, waarna de Hervormde Gemeente Lith wilde overgaan tot sloop. Nadat Alem via een grenswijziging deel was gaan uitmaken van de gemeente Maasdriel, besloot het gemeentebestuur in 1958 tot aankoop van het kerkje en de daarachter gelegen begraafplaats. In 1960 werd de kerk voor het laatst als gebedshuis gebruikt.',
+    image: '/images/geschiedenis/bt-archief.jpg',
+    imageAlt: 'Archief foto Het Alems Kerkje na de Tweede Wereldoorlog',
+    imageCaption: 'Archiefopname na WWII – collectie Gemeente Maasdriel',
   },
   {
     year: '1962',
     title: 'De restauratie',
     content:
       'De restauratie vond plaats onder auspiciën van de Driebergse architect H. Korsewagen. De restauratie was zeer grondig: het gehele dak werd vernieuwd, er kwam een nieuw uurwerk met messing wijzerplaat op de klokkentoren, en de begrafenismuur met baarhuisje werd gerestaureerd. Nadien diende het kerkje als klokkenmuseum, centrum voor de Natuurwacht Bommelerwaard en als dakpannenmuseum.',
+    image: '/images/geschiedenis/album-wolfs-de-groot.jpg',
+    imageAlt: 'Album Wolfs de Groot – restauratie periode Het Alems Kerkje',
+    imageCaption: 'Uit het album Wolfs-de Groot – restauratieperiode',
   },
   {
     year: 'Heden',
     title: 'Sociaal-cultureel centrum',
     content:
       'Thans is het kerkje — tot volle tevredenheid van de Alemse bevolking — in gebruik als sociaal-cultureel centrum. Het vormt een ontmoetingsplek voor allerlei activiteiten: van yoga en concerten tot tentoonstellingen en huwelijksceremonies. Een bijzonder stukje levend erfgoed midden in het dorp.',
+    image: '/images/geschiedenis/kerkje-archief.jpg',
+    imageAlt: 'Het Alems Kerkje – archiefopname exterieur',
+    imageCaption: 'Archiefopname exterieur',
   },
 ]
 
@@ -47,7 +63,8 @@ export default function GeschiedenisPage() {
 
       {/* Hero */}
       <section className="relative bg-stone-950 pt-40 pb-20 overflow-hidden">
-        <div className="absolute inset-0 opacity-10"
+        <div
+          className="absolute inset-0 opacity-10"
           style={{ backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, #d97706 0%, transparent 70%)' }}
         />
         <div className="relative max-w-4xl mx-auto px-6 text-center">
@@ -62,7 +79,7 @@ export default function GeschiedenisPage() {
         </div>
       </section>
 
-      {/* Intro stat */}
+      {/* Stats */}
       <section className="bg-stone-950 py-16 border-b border-stone-800">
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-3 gap-8 text-center">
           {[
@@ -78,30 +95,51 @@ export default function GeschiedenisPage() {
         </div>
       </section>
 
-      {/* Tijdlijn */}
+      {/* Tijdlijn met foto's */}
       <section className="bg-stone-950 py-24">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="relative">
-            {/* Verticale lijn */}
-            <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-stone-800 md:-translate-x-px" />
-
-            <div className="space-y-16">
-              {timeline.map((item, i) => (
-                <div key={item.year} className={`relative flex gap-8 md:gap-0 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                  {/* Content */}
-                  <div className={`pl-10 md:pl-0 w-full md:w-1/2 ${i % 2 === 0 ? 'md:pr-16' : 'md:pl-16'}`}>
-                    <div className="bg-stone-900 border border-stone-800 p-8 hover:border-amber-800/50 transition-colors">
-                      <span className="text-xs tracking-[0.3em] uppercase text-amber-500 font-light">{item.year}</span>
-                      <h3 className="font-serif text-xl text-white mt-2 mb-4">{item.title}</h3>
-                      <p className="text-stone-400 text-sm leading-relaxed">{item.content}</p>
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="space-y-32">
+            {timeline.map((item, i) => (
+              <div
+                key={item.year}
+                className={`flex flex-col ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-10 md:gap-16 items-center`}
+              >
+                {/* Foto */}
+                <div className="w-full md:w-1/2 flex-shrink-0">
+                  <figure className="relative group overflow-hidden">
+                    <div className="relative w-full" style={{ paddingBottom: '66%' }}>
+                      <Image
+                        src={item.image}
+                        alt={item.imageAlt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                      />
+                      {/* Amber overlay */}
+                      <div className="absolute inset-0 bg-amber-900/20 group-hover:bg-amber-900/10 transition-colors duration-700 mix-blend-multiply" />
                     </div>
-                  </div>
-
-                  {/* Punt op de lijn */}
-                  <div className="absolute left-0 md:left-1/2 top-8 w-3 h-3 rounded-full bg-amber-500 border-2 border-stone-950 md:-translate-x-1.5 translate-x-[-5px] flex-shrink-0" />
+                    {item.imageCaption && (
+                      <figcaption className="mt-3 text-xs text-stone-600 italic tracking-wide">
+                        {item.imageCaption}
+                      </figcaption>
+                    )}
+                  </figure>
                 </div>
-              ))}
-            </div>
+
+                {/* Tekst */}
+                <div className="w-full md:w-1/2">
+                  <span className="inline-block text-xs tracking-[0.4em] uppercase text-amber-500 font-light mb-3 border-b border-amber-700/40 pb-2">
+                    {item.year}
+                  </span>
+                  <h3 className="font-serif text-2xl md:text-3xl text-white mb-5 leading-snug">
+                    {item.title}
+                  </h3>
+                  <p className="text-stone-400 leading-relaxed text-sm md:text-base">
+                    {item.content}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
