@@ -46,10 +46,10 @@ jobs:
           DEPLOY_OUTPUT=$(netlify deploy --no-build --json 2>/dev/null || netlify deploy --no-build 2>&1)
           echo "$DEPLOY_OUTPUT"
           
-          # Extract deploy ID from output
-          DEPLOY_ID=$(echo "$DEPLOY_OUTPUT" | grep -o '"deploy_id":"[^"]*"' | head -1 | cut -d'"' -f4)
+          # Extract deploy ID from JSON output (handles both "deploy_id":"x" and "deploy_id": "x")
+          DEPLOY_ID=$(echo "$DEPLOY_OUTPUT" | grep -o '"deploy_id"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | grep -o '"[^"]*"$' | tr -d '"')
           if [ -z "$DEPLOY_ID" ]; then
-            DEPLOY_ID=$(echo "$DEPLOY_OUTPUT" | grep -o 'deploy_id: [^ ]*' | head -1 | awk '{print $2}')
+            DEPLOY_ID=$(echo "$DEPLOY_OUTPUT" | grep -o 'unique_deploy_url.*' | grep -o '[a-f0-9]\{24\}' | head -1)
           fi
           
           echo "Deploy ID: $DEPLOY_ID"
