@@ -1,0 +1,85 @@
+---
+description: "Projectspecifieke AI-regels voor alemskerkje"
+alwaysApply: true
+lastUpdated: 2026-03-31
+---
+
+# alemskerkje — Projectspecifieke regels
+
+## Architectuurprincipes
+
+- Alle database-aanroepen via `src/db/index.ts` (nooit directe Neon-aanroepen elders)
+- Database-logica uitsluitend in Server Components of Route Handlers (nooit client-side)
+- Drizzle schema is de enige bron van waarheid voor de datastructuur
+- Migraties altijd via `drizzle-kit` — nooit handmatig SQL uitvoeren op Neon
+
+## Verplichte patronen
+
+### Database queries
+```typescript
+// GOED: via de gecentraliseerde db-instantie
+import { db } from '@/db'
+import { users } from '@/db/schema'
+import { eq } from 'drizzle-orm'
+
+const user = await db.query.users.findFirst({
+  where: eq(users.id, userId),
+})
+
+// FOUT: directe neon-aanroep buiten db/index.ts
+import { neon } from '@neondatabase/serverless'
+const sql = neon(process.env.DATABASE_URL!)  // Nooit hier
+```
+
+### Server Actions vs Route Handlers
+- Gebruik **Server Actions** voor form mutations (create, update, delete)
+- Gebruik **Route Handlers** (`app/api/`) voor externe API-integraties of GET-endpoints
+- Beide mogen de `db`-instantie importeren
+
+### Tailwind
+- Mobile-first: altijd beginnen zonder breakpoint-prefix, daarna `md:` en `lg:`
+- Geen inline-styles — uitsluitend Tailwind utility classes
+- Custom kleuren en spacing via `tailwind.config.ts` (niet via arbitraire waarden)
+
+### TypeScript
+- Strict mode is actief — geen `any`, geen `!` assertions zonder uitleg
+- Gebruik de Drizzle-afgeleide types: `User`, `NewUser`, `Post`, `NewPost` uit `@/db/schema`
+- Alle Server Actions en API-routes hebben expliciete return-types
+
+## Verboden patronen
+
+- `process.env.DATABASE_URL` aanroepen buiten `src/db/index.ts`
+- Directe SQL-strings (`neon\`SELECT ...\``) buiten de db-laag
+- `useEffect` voor data fetching (gebruik Server Components of React Query)
+- Hardcoded kleuren buiten Tailwind config
+- Secrets in code of comments
+
+## Naamgeving
+
+| Element | Conventie | Voorbeeld |
+|---|---|---|
+| Componenten | PascalCase | `UserCard`, `PostList` |
+| Route Handlers | lowercase map + `route.ts` | `app/api/users/route.ts` |
+| Server Actions | camelCase in `actions/` map | `src/actions/createUser.ts` |
+| Drizzle tabellen | camelCase variabele, snake_case kolom | `users` tabel, `created_at` kolom |
+| DB-types | PascalCase van tabel | `User`, `NewUser` |
+| Hooks | use + PascalCase | `useUserData` |
+| CSS classes | alleen Tailwind utilities | `className="flex items-center gap-4"` |
+
+## Database schema wijzigen
+
+ALTIJD in deze volgorde:
+1. Pas `src/db/schema.ts` aan
+2. Run `npm run db:generate`
+3. Controleer het gegenereerde migratiebestand in `src/db/migrations/`
+4. Run `npm run db:migrate` (lokaal eerst, dan productie)
+5. Commit schema + migratiebestand samen in dezelfde commit
+
+## Environment-variabelen
+
+| Variabele | Doel | Vereist |
+|---|---|---|
+| `DATABASE_URL` | Neon connection string | Ja |
+
+Lokaal: `.env.local` (gitignored)
+Productie: Netlify dashboard > Site configuration > Environment variables

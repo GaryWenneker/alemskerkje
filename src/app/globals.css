@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #0c0a09;
+    --foreground: #f5f5f4;
+    --card: #1c1917;
+    --border: #292524;
+    --accent: #d97706;
+    --accent-hover: #b45309;
+    --muted: #78716c;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-feature-settings: 'liga' 1, 'kern' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: #d97706;
+    color: #fff;
+  }
+
+  /* Aangepaste scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0c0a09;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #44403c;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #d97706;
+  }
+}
+
+/* ── Ken Burns animatie voor hero ── */
+@keyframes kenBurns {
+  0%   { transform: scale(1.0)  translateX(0px)   translateY(0px); }
+  33%  { transform: scale(1.08) translateX(-15px) translateY(-8px); }
+  66%  { transform: scale(1.05) translateX(10px)  translateY(-5px); }
+  100% { transform: scale(1.12) translateX(-8px)  translateY(5px); }
+}
+
+.hero-kenburns {
+  animation: kenBurns 20s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* ── Fade-in animatie ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-text-1 { animation: fadeInUp 0.8s ease-out 0.1s both; }
+.hero-text-2 { animation: fadeInUp 0.8s ease-out 0.4s both; }
+.hero-text-3 { animation: fadeInUp 0.8s ease-out 0.7s both; }
+.hero-text-4 { animation: fadeInUp 0.8s ease-out 1.0s both; }
+
+@layer components {
+  /* Gouden decoratieve lijn */
+  .gold-line {
+    @apply block w-12 h-px bg-amber-500 mx-auto;
+  }
+
+  /* Sectie-inlabels */
+  .section-label {
+    @apply text-amber-500 text-xs tracking-[0.3em] uppercase font-light mb-3;
+  }
+
+  /* Gouden knop */
+  .btn-gold {
+    @apply bg-amber-600 hover:bg-amber-500 text-white px-8 py-4 text-xs tracking-[0.2em] uppercase font-medium transition-all duration-300;
+  }
+
+  /* Omlijnd knop (ghost) */
+  .btn-ghost {
+    @apply border border-stone-600 hover:border-amber-500 text-stone-300 hover:text-amber-400 px-8 py-4 text-xs tracking-[0.2em] uppercase font-medium transition-all duration-300;
+  }
+
+  /* Card stijl */
+  .card-dark {
+    @apply bg-stone-900 border border-stone-800 hover:border-amber-600/30 transition-colors duration-300;
+  }
+}

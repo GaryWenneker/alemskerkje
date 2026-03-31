@@ -1,0 +1,55 @@
+---
+description: "Project configuration for alemskerkje — Next.js + Neon + Drizzle + Tailwind"
+alwaysApply: true
+lastUpdated: 2026-03-31
+---
+
+# Project Configuration: alemskerkje
+
+## Active Technologies
+
+```yaml
+enabled:
+  - react             # Next.js 15 / React 19
+  - api-first         # API routes in App Router
+```
+
+## Stack Overview
+
+| Layer | Technology | Versie |
+|---|---|---|
+| **Framework** | Next.js 15 (App Router) | ^15.2 |
+| **Language** | TypeScript (strict) | ^5 |
+| **Styling** | Tailwind CSS | ^3.4 |
+| **Database** | Neon (PostgreSQL serverless) | ^0.10 |
+| **ORM / Migrations** | Drizzle ORM + drizzle-kit | ^0.40 / ^0.30 |
+| **Hosting** | Netlify + @netlify/plugin-nextjs | — |
+| **Runtime** | Node.js 20 | — |
+
+## CI/CD
+
+Deployment verloopt via **Netlify**:
+- Push naar `main` branch automatische deploy
+- Environment variabelen worden ingesteld via het Netlify dashboard
+- `DATABASE_URL` NOOIT committen naar git
+
+## Database Workflow (Drizzle)
+
+```bash
+npm run db:generate   # Genereer migratie-bestanden vanuit schema.ts
+npm run db:migrate    # Voer migraties uit tegen Neon
+npm run db:push       # Direct schema pushen (development shortcut)
+npm run db:studio     # Drizzle Studio — visuele database browser
+```
+
+**Schema aanpassen:**
+1. Pas `src/db/schema.ts` aan
+2. Run `npm run db:generate` -> migration file in `src/db/migrations/`
+3. Run `npm run db:migrate` -> change toegepast op Neon database
+4. Commit beide bestanden (schema + migration)
+
+## Environment Variables
+
+Zie `.env.example` voor alle benodigde variabelen.
+Lokaal: kopieer naar `.env.local` (staat in `.gitignore`).
+Productie: stel in via Netlify dashboard of `netlify env:set`.
