@@ -63,24 +63,42 @@ export default function GeschiedenisPage() {
     <>
       <Navbar />
 
-      {/* Hero */}
-      <section className="relative bg-stone-950 pt-40 pb-20 overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, #d97706 0%, transparent 70%)' }}
+      {/* Hero – volledig gevuld met kerkfoto */}
+      <section className="relative h-screen min-h-[640px] max-h-[960px] overflow-hidden">
+        {/* Achtergrondafbeelding – vult de volledige hero */}
+        <Image
+          src="/images/church-hero.jpg"
+          alt="Het Alems Kerkje – een rijke geschiedenis"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
         />
-        <div className="relative max-w-4xl mx-auto px-6 text-center">
+
+        {/* Gradient: subtiel bovenaan (voor Navbar leesbaarheid), zwaar onderaan voor tekst */}
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-stone-900/20" />
+
+        {/* Amber gloed onderaan als overgang naar de stats-sectie */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-stone-950 to-transparent" />
+
+        {/* Tekst gecentreerd onderaan de hero */}
+        <div className="absolute inset-0 flex flex-col items-center justify-end pb-24 px-6 text-center">
           <ScrollReveal direction="up" delay={0}>
-            <p className="text-xs tracking-[0.4em] uppercase text-amber-500 mb-4 font-light">
+            <p className="text-xs tracking-[0.4em] uppercase text-amber-400 mb-5 font-light">
               Het Alems Kerkje
             </p>
-            <h1 className="font-serif text-4xl md:text-6xl text-white mb-6 leading-tight">
+            <h1 className="font-serif text-5xl md:text-7xl text-white mb-6 leading-tight">
               De Geschiedenis
             </h1>
-            <p className="text-stone-400 text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-stone-300 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
               Van een 18e-eeuwse hervormde kerk tot een bruisend sociaal-cultureel centrum.
               Een verhaal van bijna drie eeuwen geschiedenis, veerkracht en gemeenschapsgeest.
             </p>
+            {/* Scroll-hint */}
+            <div className="mt-12 flex flex-col items-center gap-2 opacity-60">
+              <span className="text-xs tracking-[0.3em] uppercase text-stone-400">Scroll</span>
+              <div className="w-px h-10 bg-gradient-to-b from-amber-500 to-transparent animate-pulse" />
+            </div>
           </ScrollReveal>
         </div>
       </section>
