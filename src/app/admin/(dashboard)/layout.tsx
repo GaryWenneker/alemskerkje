@@ -1,9 +1,9 @@
-import { auth } from '@/auth'
+import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import Sidebar from '@/components/admin/Sidebar'
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const session = await auth()
+  const session = await getSession()
   if (!session) redirect('/admin/login')
 
   return (
@@ -15,10 +15,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <div />
           <div className="flex items-center gap-3">
             <span className="text-xs text-gray-400 tracking-wide">
-              {session.user?.name}
+              {session.name}
             </span>
             <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-700">
-              {(session.user as { role?: string })?.role ?? 'editor'}
+              {session.role}
             </span>
           </div>
         </header>

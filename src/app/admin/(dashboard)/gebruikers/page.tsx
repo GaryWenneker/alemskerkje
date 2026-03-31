@@ -4,7 +4,7 @@ import { users } from '@/db/schema'
 import { desc } from 'drizzle-orm'
 import { formatDate } from '@/lib/utils'
 import { deleteUser, toggleUserActive } from '@/actions/users'
-import { auth } from '@/auth'
+import { getSession } from '@/lib/session'
 
 async function getUsers() {
   return db.query.users.findMany({
@@ -20,9 +20,9 @@ const roleLabels: Record<string, { label: string; color: string }> = {
 }
 
 export default async function GebruikersPage() {
-  const session = await auth()
+  const session = await getSession()
   const allUsers = await getUsers()
-  const isAdmin = (session?.user as { role?: string })?.role === 'admin'
+  const isAdmin = session?.role === 'admin'
 
   return (
     <div className="space-y-6">
@@ -120,14 +120,11 @@ export default async function GebruikersPage() {
                         <Link href={`/admin/gebruikers/${user.id}`} className="text-xs text-blue-600 hover:text-blue-800">
                           Bewerken
                         </Link>
-                        {String(user.id) !== session?.user?.id && (
+                        {String(user.id) !== session?.id && (
                           <form action={deleteUser.bind(null, user.id)}>
                             <button
                               type="submit"
                               className="text-xs text-red-500 hover:text-red-700"
-                              onClick={(e) => {
-                                if (!confirm(`Gebruiker ${user.name} verwijderen?`)) e.preventDefault()
-                              }}
                             >
                               Verwijderen
                             </button>

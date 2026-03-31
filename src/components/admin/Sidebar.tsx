@@ -3,7 +3,10 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { signOut } from 'next-auth/react'
+async function handleLogout() {
+  await fetch('/api/auth/logout', { method: 'POST' })
+  window.location.href = '/admin/login'
+}
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: '⊞', exact: true },
@@ -60,7 +63,7 @@ export default function Sidebar() {
           ← Bekijk website
         </Link>
         <button
-          onClick={() => signOut({ callbackUrl: '/admin/login' })}
+          onClick={handleLogout}
           className="w-full flex items-center gap-2 px-3 py-2 rounded text-sm text-red-500 hover:bg-red-50 transition-colors"
         >
           <span>⬡</span> Uitloggen

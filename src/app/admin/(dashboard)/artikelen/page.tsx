@@ -85,9 +85,6 @@ export default async function ArtikelenPage() {
                       <button
                         type="submit"
                         className="text-xs text-red-500 hover:text-red-700"
-                        onClick={(e) => {
-                          if (!confirm('Artikel verwijderen?')) e.preventDefault()
-                        }}
                       >
                         Verwijderen
                       </button>
@@ -102,3 +99,4 @@ export default async function ArtikelenPage() {
     </div>
   )
 }
+

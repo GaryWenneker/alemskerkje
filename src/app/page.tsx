@@ -1,10 +1,25 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import VideoBlock from '@/components/VideoBlock'
 import Link from 'next/link'
 import { db } from '@/db'
 import { agendaItems } from '@/db/schema'
-import { desc, eq } from 'drizzle-orm'
+import { desc, eq, and, isNotNull } from 'drizzle-orm'
 import { formatDateShort } from '@/lib/utils'
+
+async function getFeaturedVideoEvent() {
+  try {
+    return await db.query.agendaItems.findFirst({
+      where: and(
+        eq(agendaItems.published, true),
+        isNotNull(agendaItems.videoUrl)
+      ),
+      orderBy: [desc(agendaItems.featured), desc(agendaItems.date)],
+    })
+  } catch {
+    return null
+  }
+}
 
 async function getUpcomingEvents() {
   try {
@@ -59,7 +74,10 @@ const activiteitenItems = [
 ]
 
 export default async function HomePage() {
-  const events = await getUpcomingEvents()
+  const [events, featuredVideo] = await Promise.all([
+    getUpcomingEvents(),
+    getFeaturedVideoEvent(),
+  ])
 
   return (
     <>
@@ -129,6 +147,73 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* ── UITGELICHT VIDEO-EVENEMENT ── */}
+      {featuredVideo?.videoUrl && featuredVideo.videoType && (
+        <section className="py-16 px-6 border-b border-stone-800/50">
+          <div className="max-w-7xl mx-auto">
+            {/* Video — zelfde breedte als de overige content */}
+            <VideoBlock
+              videoUrl={featuredVideo.videoUrl}
+              videoType={featuredVideo.videoType as 'youtube' | 'vimeo' | 'direct'}
+              title={featuredVideo.title}
+            />
+
+            {/* Info-balk onder de video: geen aparte bg, vloeit in het donkere design */}
+            <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-5 border-t border-stone-800/60 pt-6">
+              <div className="flex flex-wrap gap-6">
+                <div>
+                  <p className="text-xs tracking-widest uppercase text-stone-500 mb-1">Datum</p>
+                  <p className="text-stone-200 text-sm capitalize">
+                    {new Intl.DateTimeFormat('nl-NL', {
+                      weekday: 'long',
+                      day: 'numeric',
+                      month: 'long',
+                    }).format(new Date(featuredVideo.date))}
+                  </p>
+                </div>
+
+                {(featuredVideo.timeStart || featuredVideo.timeEnd) && (
+                  <div>
+                    <p className="text-xs tracking-widest uppercase text-stone-500 mb-1">Tijd</p>
+                    <p className="text-amber-400 text-sm">
+                      {featuredVideo.timeStart}
+                      {featuredVideo.timeEnd && (
+                        <span className="text-stone-500"> – {featuredVideo.timeEnd}</span>
+                      )}
+                    </p>
+                  </div>
+                )}
+
+                {featuredVideo.location && (
+                  <div>
+                    <p className="text-xs tracking-widest uppercase text-stone-500 mb-1">Locatie</p>
+                    <p className="text-stone-200 text-sm">{featuredVideo.location}</p>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex items-center gap-3 shrink-0">
+                {featuredVideo.ticketUrl && (
+                  <a
+                    href={featuredVideo.ticketUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-gold"
+                  >
+                    Kaarten bestellen
+                  </a>
+                )}
+                {featuredVideo.slug && (
+                  <Link href={`/agenda/${featuredVideo.slug}`} className="btn-ghost">
+                    Meer info
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── ACTIVITEITEN ── */}
       <section className="py-24 px-6">

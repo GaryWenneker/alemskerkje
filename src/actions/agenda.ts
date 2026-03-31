@@ -4,7 +4,7 @@ import { db } from '@/db'
 import { agendaItems } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
-import { auth } from '@/auth'
+import { getSession } from '@/lib/session'
 import { uploadImage, deleteImage } from '@/lib/blob-storage'
 
 async function resolveImageUrl(
@@ -31,7 +31,7 @@ async function resolveImageUrl(
 }
 
 export async function createAgendaItem(formData: FormData) {
-  const session = await auth()
+  const session = await getSession()
   if (!session) throw new Error('Niet ingelogd')
 
   const title = formData.get('title') as string
@@ -55,7 +55,7 @@ export async function createAgendaItem(formData: FormData) {
     location: location || 'Het Alems Kerkje, Sint Odradastraat 12, Alem',
     imageUrl,
     published,
-    authorId: parseInt(session.user.id),
+    authorId: parseInt(session.id),
   })
 
   revalidatePath('/agenda')
@@ -64,7 +64,7 @@ export async function createAgendaItem(formData: FormData) {
 }
 
 export async function updateAgendaItem(id: number, formData: FormData) {
-  const session = await auth()
+  const session = await getSession()
   if (!session) throw new Error('Niet ingelogd')
 
   const title = formData.get('title') as string
@@ -103,7 +103,7 @@ export async function updateAgendaItem(id: number, formData: FormData) {
 }
 
 export async function deleteAgendaItem(id: number) {
-  const session = await auth()
+  const session = await getSession()
   if (!session) throw new Error('Niet ingelogd')
 
   const [existing] = await db
@@ -121,7 +121,7 @@ export async function deleteAgendaItem(id: number) {
 }
 
 export async function toggleAgendaPublished(id: number, published: boolean) {
-  const session = await auth()
+  const session = await getSession()
   if (!session) throw new Error('Niet ingelogd')
 
   await db

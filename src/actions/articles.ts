@@ -4,7 +4,7 @@ import { db } from '@/db'
 import { articles } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
-import { auth } from '@/auth'
+import { getSession } from '@/lib/session'
 import { slugify } from '@/lib/utils'
 import { uploadImage, deleteImage } from '@/lib/blob-storage'
 
@@ -29,7 +29,7 @@ async function resolveImageUrl(
 }
 
 export async function createArticle(formData: FormData) {
-  const session = await auth()
+  const session = await getSession()
   if (!session) throw new Error('Niet ingelogd')
 
   const title = formData.get('title') as string
@@ -52,7 +52,7 @@ export async function createArticle(formData: FormData) {
     imageUrl,
     published,
     publishedAt: published ? new Date() : null,
-    authorId: parseInt(session.user.id),
+    authorId: parseInt(session.id),
   })
 
   revalidatePath('/nieuws')
@@ -60,7 +60,7 @@ export async function createArticle(formData: FormData) {
 }
 
 export async function updateArticle(id: number, formData: FormData) {
-  const session = await auth()
+  const session = await getSession()
   if (!session) throw new Error('Niet ingelogd')
 
   const title = formData.get('title') as string
@@ -95,7 +95,7 @@ export async function updateArticle(id: number, formData: FormData) {
 }
 
 export async function deleteArticle(id: number) {
-  const session = await auth()
+  const session = await getSession()
   if (!session) throw new Error('Niet ingelogd')
 
   const [existing] = await db
@@ -112,7 +112,7 @@ export async function deleteArticle(id: number) {
 }
 
 export async function togglePublished(id: number, published: boolean) {
-  const session = await auth()
+  const session = await getSession()
   if (!session) throw new Error('Niet ingelogd')
 
   await db

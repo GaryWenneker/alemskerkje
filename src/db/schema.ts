@@ -31,13 +31,20 @@ export const users = pgTable('users', {
 
 export const agendaItems = pgTable('agenda_items', {
   id: serial('id').primaryKey(),
+  slug: varchar('slug', { length: 500 }).unique(),
   title: varchar('title', { length: 500 }).notNull(),
   description: text('description'),
+  content: text('content'),
   date: timestamp('date').notNull(),
   timeStart: varchar('time_start', { length: 10 }),
   timeEnd: varchar('time_end', { length: 10 }),
   location: varchar('location', { length: 500 }).default('Het Alems Kerkje, Sint Odradastraat 12, Alem'),
+  category: varchar('category', { length: 100 }),
   imageUrl: varchar('image_url', { length: 1000 }),
+  videoUrl: varchar('video_url', { length: 1000 }),
+  // youtube | vimeo | direct
+  videoType: varchar('video_type', { length: 20 }),
+  ticketUrl: varchar('ticket_url', { length: 1000 }),
   published: boolean('published').default(false).notNull(),
   featured: boolean('featured').default(false).notNull(),
   authorId: integer('author_id').references(() => users.id, { onDelete: 'set null' }),
@@ -149,6 +156,8 @@ export type NewUser = typeof users.$inferInsert
 
 export type AgendaItem = typeof agendaItems.$inferSelect
 export type NewAgendaItem = typeof agendaItems.$inferInsert
+
+export type VideoType = 'youtube' | 'vimeo' | 'direct'
 
 export type Article = typeof articles.$inferSelect
 export type NewArticle = typeof articles.$inferInsert

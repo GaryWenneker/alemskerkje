@@ -4,13 +4,13 @@ import { db } from '@/db'
 import { users } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
-import { auth } from '@/auth'
+import { getSession } from '@/lib/session'
 import bcrypt from 'bcryptjs'
 
 async function requireAdmin() {
-  const session = await auth()
+  const session = await getSession()
   if (!session) throw new Error('Niet ingelogd')
-  const role = (session.user as { role?: string })?.role
+  const role = session.role
   if (role !== 'admin') throw new Error('Geen admin-rechten')
   return session
 }
@@ -62,7 +62,7 @@ export async function updateUser(id: number, formData: FormData) {
 export async function deleteUser(id: number) {
   const session = await requireAdmin()
 
-  if (String(id) === session.user?.id) throw new Error('U kunt uw eigen account niet verwijderen')
+  if (String(id) === session.id) throw new Error('U kunt uw eigen account niet verwijderen')
 
   await db.delete(users).where(eq(users.id, id))
 
@@ -72,7 +72,7 @@ export async function deleteUser(id: number) {
 export async function toggleUserActive(id: number, isActive: boolean) {
   const session = await requireAdmin()
 
-  if (String(id) === session.user?.id) throw new Error('U kunt uw eigen account niet deactiveren')
+  if (String(id) === session.id) throw new Error('U kunt uw eigen account niet deactiveren')
 
   await db.update(users).set({ isActive, updatedAt: new Date() }).where(eq(users.id, id))
 

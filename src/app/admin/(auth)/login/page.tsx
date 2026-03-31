@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
@@ -15,19 +14,30 @@ export default function LoginPage() {
     setError('')
 
     const data = new FormData(e.currentTarget)
-    const result = await signIn('credentials', {
-      email: data.get('email'),
-      password: data.get('password'),
-      redirect: false,
-    })
 
-    if (result?.error) {
-      setError('Ongeldig e-mailadres of wachtwoord.')
-    } else {
-      router.push('/admin')
-      router.refresh()
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: data.get('email'),
+          password: data.get('password'),
+        }),
+      })
+
+      const json = await res.json()
+
+      if (!res.ok || json.error) {
+        setError(json.error ?? 'Ongeldig e-mailadres of wachtwoord.')
+      } else {
+        // Login gelukt — hard reload naar /admin zodat de cookie zeker meegestuurd wordt
+        window.location.href = '/admin'
+      }
+    } catch {
+      setError('Er is een fout opgetreden. Probeer het opnieuw.')
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   return (
