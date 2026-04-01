@@ -158,8 +158,9 @@ export default function EventVideoHero({
         </div>
 
         {/* ── DESKTOP: gradient + datum/knoppen (onder) ── */}
-        <div className="hidden md:flex video-overlay-bottom absolute bottom-0 left-0 right-0 z-10 h-auto flex-col justify-end">
-          <div className="pb-6 px-12 flex flex-col gap-3">
+        <div className="hidden md:flex video-overlay-bottom absolute bottom-0 left-0 right-0 z-10 h-2/5 flex-col justify-end">
+          <div className="pb-6 px-8 md:px-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            {/* Datum · Tijd · Locatie */}
             <div className="flex flex-wrap gap-5">
               <div>
                 <p className="text-[10px] tracking-widest uppercase text-stone-400 mb-0.5">Datum</p>
@@ -181,7 +182,8 @@ export default function EventVideoHero({
                 </div>
               )}
             </div>
-            <div className="flex flex-wrap items-center gap-3">
+            {/* Knoppen + geluid */}
+            <div className="flex items-center gap-3 shrink-0">
               {muteButton}
               {ticketUrl && (
                 <button type="button" onClick={() => setTicketOpen(true)} className="btn-gold py-2 px-5 text-xs">
