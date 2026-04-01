@@ -61,6 +61,7 @@ export default function Navbar() {
   const isKerkjeActive = pathname.startsWith('/kerkje')
 
   return (
+    <>
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
@@ -192,14 +193,15 @@ export default function Navbar() {
           <span className={cn('block w-6 h-0.5 bg-white origin-center transition-all duration-300', menuOpen && '-rotate-45 -translate-y-[7px]')} />
         </button>
       </nav>
+    </header>
 
-      {/* Mobiel menu — full-screen overlay for easy touch navigation */}
+      {/* Mobiel menu — buiten <header> om stacking context te vermijden */}
       <div
         id="mobile-nav"
         role="navigation"
         aria-label="Mobiele navigatie"
         className={cn(
-          'md:hidden fixed inset-0 top-16 bg-stone-950/98 backdrop-blur-md z-40 transition-all duration-300 overflow-y-auto',
+          'md:hidden fixed inset-0 top-16 bg-stone-950 z-[49] transition-all duration-300 overflow-y-auto',
           menuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-2',
         )}
       >
@@ -283,6 +285,6 @@ export default function Navbar() {
           </li>
         </ul>
       </div>
-    </header>
+    </>
   )
 }
