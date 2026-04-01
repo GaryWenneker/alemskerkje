@@ -72,17 +72,9 @@ export default function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-6 lg:px-8 h-16 md:h-20 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="group leading-tight">
-          {/* Mobile: single row */}
-          <div className="flex sm:hidden items-baseline gap-1.5">
-            <span className="text-xs tracking-[0.3em] uppercase text-amber-500 font-light font-sans">Het</span>
-            <span className="text-lg font-serif text-white group-hover:text-amber-300 transition-colors">Alems Kerkje</span>
-          </div>
-          {/* Desktop: stacked */}
-          <div className="hidden sm:flex flex-col">
-            <span className="text-xs tracking-[0.3em] uppercase text-amber-500 font-light">Het</span>
-            <span className="text-lg font-serif text-white group-hover:text-amber-300 transition-colors">Alems Kerkje</span>
-          </div>
+        <Link href="/" className="group flex items-center gap-2 sm:flex-col sm:items-start sm:gap-0">
+          <span className="text-xs tracking-[0.3em] uppercase text-amber-500 font-light font-sans sm:leading-none">Het</span>
+          <span className="text-lg font-serif text-white group-hover:text-amber-300 transition-colors sm:leading-none">Alems Kerkje</span>
         </Link>
 
         {/* Desktop navigatie */}
@@ -187,7 +179,7 @@ export default function Navbar() {
         {/* Mobiel menu-knop — 44×44 touch target */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden shrink-0 self-center flex flex-col justify-center items-center w-11 h-11 gap-[5px]"
+          className="md:hidden shrink-0 flex flex-col justify-center items-center w-11 h-11 gap-[5px]"
           aria-label={menuOpen ? 'Menu sluiten' : 'Menu openen'}
           aria-expanded={menuOpen}
           aria-controls="mobile-nav"
