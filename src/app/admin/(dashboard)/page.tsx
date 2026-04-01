@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { db } from '@/db'
 import { articles, agendaItems, users, contactMessages } from '@/db/schema'
 import { count, eq } from 'drizzle-orm'
