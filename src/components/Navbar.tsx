@@ -64,13 +64,13 @@ export default function Navbar() {
     <>
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+        'fixed top-0 left-0 right-0 z-50 h-16 md:h-20 transition-all duration-500',
         scrolled || menuOpen
           ? 'bg-stone-950/95 backdrop-blur-sm border-b border-stone-800/50'
           : 'bg-transparent',
       )}
     >
-      <nav className="max-w-7xl mx-auto px-6 lg:px-8 h-16 md:h-20 flex items-center justify-between">
+      <nav className="max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="group leading-tight">
           {/* Mobile: single row */}
@@ -187,7 +187,7 @@ export default function Navbar() {
         {/* Mobiel menu-knop — 44×44 touch target */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden flex flex-col justify-center items-center w-11 h-11 gap-[5px] -mr-1"
+          className="md:hidden shrink-0 flex flex-col justify-center items-center w-11 h-11 gap-[5px] -mr-1"
           aria-label={menuOpen ? 'Menu sluiten' : 'Menu openen'}
           aria-expanded={menuOpen}
           aria-controls="mobile-nav"
