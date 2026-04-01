@@ -15,8 +15,11 @@
 
   html {
     scroll-behavior: smooth;
-    /* Prevent iOS bounce overscroll */
     overscroll-behavior-y: none;
+  }
+
+  body {
+    overflow-x: hidden;
   }
 
   body,
