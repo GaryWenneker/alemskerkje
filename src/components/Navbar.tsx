@@ -197,8 +197,8 @@ export default function Navbar() {
         role="navigation"
         aria-label="Mobiele navigatie"
         className={cn(
-          'md:hidden fixed inset-0 top-16 bg-stone-950 z-[49] transition-all duration-300 overflow-y-auto',
-          menuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-2',
+          'md:hidden fixed top-16 left-0 right-0 bottom-0 w-full bg-stone-950 z-[49] overflow-y-auto overflow-x-hidden transition-opacity duration-300',
+          menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none',
         )}
       >
         <ul className="px-6 pb-10 pt-6 flex flex-col gap-0 divide-y divide-stone-800/50">
