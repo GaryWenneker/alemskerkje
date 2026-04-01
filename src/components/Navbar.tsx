@@ -72,13 +72,17 @@ export default function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-6 lg:px-8 h-16 md:h-20 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex flex-col leading-tight group">
-          <span className="text-xs tracking-[0.3em] uppercase text-amber-500 font-light">
-            Het
-          </span>
-          <span className="text-lg font-serif text-white group-hover:text-amber-300 transition-colors">
-            Alems Kerkje
-          </span>
+        <Link href="/" className="group leading-tight">
+          {/* Mobile: single row */}
+          <div className="flex sm:hidden items-baseline gap-1.5">
+            <span className="text-xs tracking-[0.3em] uppercase text-amber-500 font-light font-sans">Het</span>
+            <span className="text-lg font-serif text-white group-hover:text-amber-300 transition-colors">Alems Kerkje</span>
+          </div>
+          {/* Desktop: stacked */}
+          <div className="hidden sm:flex flex-col">
+            <span className="text-xs tracking-[0.3em] uppercase text-amber-500 font-light">Het</span>
+            <span className="text-lg font-serif text-white group-hover:text-amber-300 transition-colors">Alems Kerkje</span>
+          </div>
         </Link>
 
         {/* Desktop navigatie */}
