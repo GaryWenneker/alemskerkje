@@ -326,7 +326,6 @@ export default async function AgendaPage() {
           <section className="px-6 py-12">
             <div className="max-w-7xl mx-auto">
               <p className="section-label mb-6">Uitgelicht evenement</p>
-              <ScrollReveal direction="up" delay={120}>
               <FeaturedEventCard
                 title={featured.title}
                 category={featured.category ?? null}
@@ -339,7 +338,6 @@ export default async function AgendaPage() {
                 img={img}
                 videoId={videoId}
               />
-              </ScrollReveal>
             </div>
           </section>
         )
