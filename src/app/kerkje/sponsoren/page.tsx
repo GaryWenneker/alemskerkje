@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import ScrollReveal from '@/components/ScrollReveal'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 
@@ -85,6 +86,7 @@ export default function SponsorenPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-stone-950/40 via-stone-950/70 to-stone-950" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+          <ScrollReveal direction="up" delay={200}>
           <p className="text-xs tracking-[0.4em] uppercase text-amber-500 mb-4 font-light">Onze gewaardeerde</p>
           <h1 className="font-serif text-4xl md:text-6xl text-white mb-6 leading-tight">
             Sponsoren
@@ -92,20 +94,21 @@ export default function SponsorenPage() {
           <p className="text-stone-400 text-lg leading-relaxed max-w-2xl mx-auto">
             Dank aan onze gewaardeerde sponsoren die samen met ons de toekomst van Het Alems Kerkje mogelijk maken.
           </p>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Sponsoren grid */}
-      <section className="bg-stone-950 py-24">
-        <div className="max-w-6xl mx-auto px-6">
+      <section className="bg-stone-950 py-16 sm:py-24">
+        <div className="max-w-6xl mx-auto px-5 sm:px-6">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-stone-800">
-            {sponsoren.map((sponsor) => (
+            {sponsoren.map((sponsor, i) => (
+              <ScrollReveal key={sponsor.naam} direction="scale" delay={(i % 4) * 60}>
               <a
-                key={sponsor.naam}
                 href={sponsor.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group bg-stone-950 p-8 flex flex-col hover:bg-stone-900 transition-colors duration-300"
+                className="group bg-stone-950 p-8 flex flex-col hover:bg-stone-900 transition-colors duration-300 h-full"
               >
                 {/* Logo met uniforme amber kleurstijl */}
                 <div className="h-16 mb-6 flex items-center">
@@ -127,14 +130,16 @@ export default function SponsorenPage() {
                   Bekijken →
                 </span>
               </a>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* Sponsor worden CTA */}
-      <section className="bg-stone-900 border-t border-stone-800 py-24">
-        <div className="max-w-3xl mx-auto px-6 text-center">
+      <section className="bg-stone-900 border-t border-stone-800 py-16 sm:py-24">
+        <div className="max-w-3xl mx-auto px-5 sm:px-6 text-center">
+          <ScrollReveal direction="scale">
           <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-4">Uw naam erbij?</p>
           <h2 className="font-serif text-3xl text-white mb-6">Word sponsor</h2>
           <p className="text-stone-400 text-sm leading-relaxed mb-8 max-w-xl mx-auto">
@@ -146,6 +151,7 @@ export default function SponsorenPage() {
           >
             Neem contact op
           </a>
+          </ScrollReveal>
         </div>
       </section>
 

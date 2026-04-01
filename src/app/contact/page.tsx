@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import ScrollReveal from '@/components/ScrollReveal'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import { db } from '@/db'
@@ -44,18 +45,21 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-stone-950/50 via-stone-950/75 to-stone-950" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto">
+          <ScrollReveal direction="up" delay={200}>
           <p className="section-label">Bereik ons</p>
           <h1 className="font-serif text-4xl md:text-6xl text-white">Contact</h1>
           <p className="text-stone-400 mt-4 max-w-xl leading-relaxed">
             Heeft u vragen of wilt u een activiteit plannen? We horen graag van u.
           </p>
+          </ScrollReveal>
         </div>
       </section>
 
-      <section className="py-20 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <section className="py-16 sm:py-20 px-5 sm:px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
 
           {/* Contactgegevens */}
+          <ScrollReveal direction="right">
           <div className="space-y-10">
             <div>
               <h2 className="font-serif text-2xl text-white mb-6">Bezoekadres</h2>
@@ -95,8 +99,10 @@ export default function ContactPage() {
               </a>
             </div>
           </div>
+          </ScrollReveal>
 
           {/* Contactformulier */}
+          <ScrollReveal direction="left" delay={120}>
           <div>
             <h2 className="font-serif text-2xl text-white mb-6">Stuur een bericht</h2>
             <form action={sendMessage} className="space-y-5">
@@ -161,6 +167,7 @@ export default function ContactPage() {
               </button>
             </form>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 

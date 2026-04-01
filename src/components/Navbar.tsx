@@ -32,6 +32,16 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
+
   useEffect(() => {
     setMenuOpen(false)
     setKerkjeOpen(false)
@@ -169,35 +179,39 @@ export default function Navbar() {
           </li>
         </ul>
 
-        {/* Mobiel menu-knop */}
+        {/* Mobiel menu-knop — 44×44 touch target */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden flex flex-col gap-1.5 p-2"
+          className="md:hidden flex flex-col justify-center items-center w-11 h-11 gap-[5px] -mr-1"
           aria-label={menuOpen ? 'Menu sluiten' : 'Menu openen'}
           aria-expanded={menuOpen}
+          aria-controls="mobile-nav"
         >
-          <span className={cn('block w-6 h-px bg-white transition-all duration-300', menuOpen && 'rotate-45 translate-y-2.5')} />
-          <span className={cn('block w-6 h-px bg-white transition-all duration-300', menuOpen && 'opacity-0')} />
-          <span className={cn('block w-6 h-px bg-white transition-all duration-300', menuOpen && '-rotate-45 -translate-y-2.5')} />
+          <span className={cn('block w-6 h-0.5 bg-white origin-center transition-all duration-300', menuOpen && 'rotate-45 translate-y-[7px]')} />
+          <span className={cn('block w-6 h-0.5 bg-white transition-all duration-300', menuOpen && 'opacity-0 scale-x-0')} />
+          <span className={cn('block w-6 h-0.5 bg-white origin-center transition-all duration-300', menuOpen && '-rotate-45 -translate-y-[7px]')} />
         </button>
       </nav>
 
-      {/* Mobiel menu */}
+      {/* Mobiel menu — full-screen overlay for easy touch navigation */}
       <div
+        id="mobile-nav"
+        role="navigation"
+        aria-label="Mobiele navigatie"
         className={cn(
-          'md:hidden overflow-hidden transition-all duration-300',
-          menuOpen ? 'max-h-screen border-b border-stone-800' : 'max-h-0',
+          'md:hidden fixed inset-0 top-16 bg-stone-950/98 backdrop-blur-md z-40 transition-all duration-300 overflow-y-auto',
+          menuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-2',
         )}
       >
-        <ul className="px-6 pb-6 pt-2 flex flex-col gap-1">
+        <ul className="px-6 pb-10 pt-6 flex flex-col gap-0 divide-y divide-stone-800/50">
 
           {/* Agenda — eerste link */}
           <li>
             <Link
               href="/agenda"
               className={cn(
-                'block text-sm tracking-widest uppercase py-3 transition-colors',
-                pathname === '/agenda' ? 'text-amber-400' : 'text-stone-300 hover:text-white',
+                'flex items-center min-h-[60px] text-base tracking-widest uppercase transition-colors',
+                pathname === '/agenda' ? 'text-amber-400' : 'text-stone-300',
               )}
             >
               Agenda
@@ -209,32 +223,32 @@ export default function Navbar() {
             <button
               onClick={() => setKerkjeMobileOpen(!kerkjeMobileOpen)}
               className={cn(
-                'flex items-center justify-between w-full py-3 text-sm tracking-widest uppercase transition-colors',
+                'flex items-center justify-between w-full min-h-[60px] text-base tracking-widest uppercase transition-colors',
                 isKerkjeActive ? 'text-amber-400' : 'text-stone-300',
               )}
               aria-expanded={kerkjeMobileOpen}
             >
               <span>Het Kerkje</span>
               <svg
-                className={cn('w-4 h-4 transition-transform duration-200', kerkjeMobileOpen && 'rotate-180')}
+                className={cn('w-5 h-5 transition-transform duration-300', kerkjeMobileOpen && 'rotate-180')}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                strokeWidth={2}
+                strokeWidth={1.5}
                 aria-hidden="true"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
-            <div className={cn('overflow-hidden transition-all duration-300', kerkjeMobileOpen ? 'max-h-64' : 'max-h-0')}>
-              <ul className="pl-4 pb-2 space-y-1 border-l border-stone-800">
+            <div className={cn('overflow-hidden transition-all duration-300', kerkjeMobileOpen ? 'max-h-[400px] pb-2' : 'max-h-0')}>
+              <ul className="pl-4 border-l border-amber-800/40">
                 {kerkjeLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
                       className={cn(
-                        'block py-2 pl-3 text-sm tracking-wide transition-colors',
-                        pathname === link.href ? 'text-amber-400' : 'text-stone-400 hover:text-white',
+                        'flex items-center min-h-[52px] pl-3 text-sm tracking-wide transition-colors',
+                        pathname === link.href ? 'text-amber-400' : 'text-stone-400',
                       )}
                     >
                       {link.label}
@@ -245,13 +259,13 @@ export default function Navbar() {
             </div>
           </li>
 
-          {navLinks.map((link) => (
+          {navLinks.filter(l => l.href !== '/contact').map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
                 className={cn(
-                  'block text-sm tracking-widest uppercase py-3 transition-colors',
-                  pathname === link.href ? 'text-amber-400' : 'text-stone-300 hover:text-white',
+                  'flex items-center min-h-[60px] text-base tracking-widest uppercase transition-colors',
+                  pathname === link.href ? 'text-amber-400' : 'text-stone-300',
                 )}
               >
                 {link.label}
@@ -259,10 +273,10 @@ export default function Navbar() {
             </li>
           ))}
 
-          <li className="pt-2">
+          <li className="pt-6">
             <Link
               href="/contact"
-              className="inline-block border border-amber-600 text-amber-400 px-6 py-3 text-xs tracking-widest uppercase"
+              className="flex items-center justify-center w-full border border-amber-600 text-amber-400 min-h-[56px] text-sm tracking-[0.2em] uppercase"
             >
               Reserveer de locatie
             </Link>

@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import ScrollReveal from '@/components/ScrollReveal'
 import DoneerSectie from '@/components/DoneerSectie'
 import Image from 'next/image'
 import type { Metadata } from 'next'
@@ -43,6 +44,7 @@ export default function VriendenVanPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-stone-950/30 via-stone-950/50 to-stone-950" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+          <ScrollReveal direction="up" delay={200}>
           <p className="text-xs tracking-[0.4em] uppercase text-amber-500 mb-4 font-light">Help mee en</p>
           <h1 className="font-serif text-4xl md:text-6xl text-white mb-6 leading-tight">
             Word Vriend
@@ -50,13 +52,15 @@ export default function VriendenVanPage() {
           <p className="text-stone-400 text-lg leading-relaxed max-w-2xl mx-auto">
             Help mee om de sociaal-culturele activiteiten in Het Alems Kerkje mogelijk te maken. Word vriend, doneer of zet u in als vrijwilliger.
           </p>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Waarom steun */}
-      <section className="bg-stone-950 py-24 border-b border-stone-800">
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="bg-stone-950 py-16 sm:py-24 border-b border-stone-800">
+        <div className="max-w-4xl mx-auto px-5 sm:px-6">
           <div className="grid md:grid-cols-2 gap-12">
+            <ScrollReveal direction="right">
             <div>
               <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-4">Waarom uw steun belangrijk is</p>
               <h2 className="font-serif text-3xl text-white mb-6">Een uniek stuk erfgoed</h2>
@@ -69,8 +73,10 @@ export default function VriendenVanPage() {
                 </p>
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Vriend worden kaart */}
+            <ScrollReveal direction="left" delay={120}>
             <div className="bg-stone-900 border border-amber-800/30 p-8 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-amber-600/5 rounded-full -translate-x-4 -translate-y-8" />
               <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-4">Word vriend</p>
@@ -93,6 +99,7 @@ export default function VriendenVanPage() {
                 Word nu vriend
               </a>
             </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -100,8 +107,9 @@ export default function VriendenVanPage() {
       <DoneerSectie />
 
       {/* Vrijwilliger */}
-      <section className="bg-stone-950 py-24">
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="bg-stone-950 py-16 sm:py-24">
+        <div className="max-w-4xl mx-auto px-5 sm:px-6">
+          <ScrollReveal>
           <div className="text-center mb-12">
             <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-4">Actief bijdragen</p>
             <h2 className="font-serif text-3xl text-white mb-4">Word Vrijwilliger</h2>
@@ -109,17 +117,20 @@ export default function VriendenVanPage() {
               We zijn altijd op zoek naar enthousiaste mensen die willen helpen. Als vrijwilliger word je onderdeel van een gedreven team.
             </p>
           </div>
+          </ScrollReveal>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
-            {vrijwilligerRollen.map((r) => (
+            {vrijwilligerRollen.map((r, i) => (
+              <ScrollReveal key={r.rol} direction="up" delay={(i % 3) * 70}>
               <div
-                key={r.rol}
-                className="bg-stone-900 border border-stone-800 p-6 hover:border-amber-800/40 transition-colors"
+                className="bg-stone-900 border border-stone-800 p-6 hover:border-amber-800/40 transition-colors h-full"
               >
                 <p className="text-white font-medium mb-2">{r.rol}</p>
                 <p className="text-stone-400 text-xs leading-relaxed">{r.omschrijving}</p>
               </div>
+              </ScrollReveal>
             ))}
           </div>
+          <ScrollReveal delay={100}>
           <div className="text-center">
             <a
               href="/contact"
@@ -128,6 +139,7 @@ export default function VriendenVanPage() {
               Meld u aan als vrijwilliger
             </a>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 

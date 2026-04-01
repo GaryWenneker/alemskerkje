@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import ScrollReveal from '@/components/ScrollReveal'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
@@ -41,6 +42,7 @@ export default function DeStichtingPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-stone-950/40 via-stone-950/70 to-stone-950" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+          <ScrollReveal direction="up" delay={200}>
           <p className="text-xs tracking-[0.4em] uppercase text-amber-500 mb-4 font-light">Informatie over</p>
           <h1 className="font-serif text-4xl md:text-6xl text-white mb-6 leading-tight">
             De Stichting
@@ -48,13 +50,15 @@ export default function DeStichtingPage() {
           <p className="text-stone-400 text-lg leading-relaxed max-w-2xl mx-auto">
             Stichting Het Alems Kerkje is een ANBI-erkende organisatie zonder winstoogmerk, opgericht door en voor de Alemse gemeenschap.
           </p>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Achtergrond */}
-      <section className="bg-stone-950 py-24 border-b border-stone-800">
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="bg-stone-950 py-20 sm:py-24 border-b border-stone-800">
+        <div className="max-w-4xl mx-auto px-5 sm:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-start">
+            <ScrollReveal direction="right">
             <div>
               <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-4">Achtergrond</p>
               <h2 className="font-serif text-3xl text-white mb-6">Hoe de stichting ontstond</h2>
@@ -70,8 +74,10 @@ export default function DeStichtingPage() {
                 </p>
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Doelstelling */}
+            <ScrollReveal direction="left" delay={120}>
             <div className="bg-stone-900 border border-stone-800 p-8">
               <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-4">Doelstelling</p>
               <p className="font-serif text-xl text-white mb-4 leading-relaxed">
@@ -89,14 +95,16 @@ export default function DeStichtingPage() {
                 </div>
               </div>
             </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
       {/* ANBI */}
-      <section className="bg-stone-900 py-24 border-b border-stone-800">
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="bg-stone-900 py-20 sm:py-24 border-b border-stone-800">
+        <div className="max-w-4xl mx-auto px-5 sm:px-6">
           <div className="flex flex-col md:flex-row gap-12 items-start">
+            <ScrollReveal direction="right">
             <div className="md:w-1/3">
               <div className="inline-block bg-amber-600/20 border border-amber-600/40 px-4 py-2 mb-4">
                 <span className="text-amber-400 text-sm font-medium tracking-widest uppercase">ANBI</span>
@@ -116,8 +124,10 @@ export default function DeStichtingPage() {
                 </a>
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Bestuur */}
+            <ScrollReveal direction="left" delay={120}>
             <div className="md:w-2/3">
               <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-6">Het bestuur</p>
               <div className="grid sm:grid-cols-2 gap-4">
@@ -129,13 +139,15 @@ export default function DeStichtingPage() {
                 ))}
               </div>
             </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
       {/* Algemene info */}
-      <section className="bg-stone-950 py-24">
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="bg-stone-950 py-20 sm:py-24">
+        <div className="max-w-4xl mx-auto px-5 sm:px-6">
+          <ScrollReveal>
           <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-8">Algemene informatie</p>
           <div className="grid sm:grid-cols-2 gap-px bg-stone-800">
             {algemeneInfo.map((item) => (
@@ -158,6 +170,7 @@ export default function DeStichtingPage() {
               Bekijk het beleidsplan →
             </Link>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 

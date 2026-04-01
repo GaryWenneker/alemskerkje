@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import ScrollReveal from '@/components/ScrollReveal'
 import Link from 'next/link'
 import Image from 'next/image'
 import { db } from '@/db'
@@ -47,24 +48,29 @@ export default async function NieuwsPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-stone-950/50 via-stone-950/75 to-stone-950" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto">
+          <ScrollReveal direction="up" delay={200}>
           <p className="section-label">Verhalen &amp; aankondigingen</p>
           <h1 className="font-serif text-4xl md:text-6xl text-white">Nieuws</h1>
           <p className="text-stone-400 mt-4 max-w-xl leading-relaxed">
             Het laatste nieuws en achtergrondverhalen van Het Alems Kerkje.
           </p>
+          </ScrollReveal>
         </div>
       </section>
 
-      <section className="py-20 px-6">
+      <section className="py-16 sm:py-20 px-5 sm:px-6">
         <div className="max-w-7xl mx-auto">
           {posts.length === 0 ? (
+            <ScrollReveal>
             <div className="text-center py-24 border border-stone-800">
               <p className="text-stone-500">Nog geen berichten gepubliceerd.</p>
             </div>
+            </ScrollReveal>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {posts.map((post) => (
-                <article key={post.id} className="card-dark group overflow-hidden">
+              {posts.map((post, i) => (
+                <ScrollReveal key={post.id} direction="up" delay={(i % 3) * 80}>
+                <article className="card-dark group overflow-hidden h-full">
                   {post.imageUrl && (
                     <div className="h-48 overflow-hidden">
                       <img
@@ -97,6 +103,7 @@ export default async function NieuwsPage() {
                     )}
                   </div>
                 </article>
+                </ScrollReveal>
               ))}
             </div>
           )}

@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import EventVideoHero from '@/components/EventVideoHero'
+import ScrollReveal from '@/components/ScrollReveal'
 import Link from 'next/link'
 import { db } from '@/db'
 import { agendaItems } from '@/db/schema'
@@ -156,8 +157,9 @@ export default async function HomePage() {
       )}
 
       {/* ── AGENDA ── */}
-      <section className="py-24 px-6 bg-stone-900/30">
+      <section className="py-16 sm:py-24 px-5 sm:px-6 bg-stone-900/30">
         <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
             <div>
               <p className="section-label">Komende activiteiten</p>
@@ -167,11 +169,13 @@ export default async function HomePage() {
               Alle evenementen →
             </Link>
           </div>
+          </ScrollReveal>
 
           {events.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {events.map((event) => (
-                <article key={event.id} className="card-dark overflow-hidden group">
+              {events.map((event, i) => (
+                <ScrollReveal key={event.id} delay={i * 80} direction="up">
+                <article className="card-dark overflow-hidden group">
                   {event.imageUrl && (
                     <div className="h-48 bg-stone-800 overflow-hidden">
                       <img
@@ -194,21 +198,25 @@ export default async function HomePage() {
                     )}
                   </div>
                 </article>
+                </ScrollReveal>
               ))}
             </div>
           ) : (
+            <ScrollReveal>
             <div className="text-center py-16 border border-stone-800 rounded">
               <p className="text-stone-500 text-sm tracking-wide">
                 De agenda wordt binnenkort gevuld. Kom snel terug.
               </p>
             </div>
+            </ScrollReveal>
           )}
         </div>
       </section>
 
       {/* ── ACTIVITEITEN ── */}
-      <section className="py-24 px-6" aria-labelledby="activiteiten-heading">
+      <section className="py-16 sm:py-24 px-5 sm:px-6" aria-labelledby="activiteiten-heading">
         <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
           <div className="text-center mb-10">
             <p className="section-label">Veel soorten</p>
             <h2 id="activiteiten-heading" className="font-serif text-3xl md:text-4xl text-white mb-4">
@@ -220,6 +228,7 @@ export default async function HomePage() {
             </p>
             <span className="gold-line" aria-hidden="true" />
           </div>
+          </ScrollReveal>
 
           {/* Grid — 1 kolom mobiel, 2×2 tablet, 4 breed desktop */}
           <ul
@@ -324,18 +333,21 @@ export default async function HomePage() {
             ))}
           </ul>
 
+          <ScrollReveal delay={100}>
           <div className="text-center mt-12">
             <Link href="/activiteiten" className="btn-ghost">
               Alle activiteiten bekijken
             </Link>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* ── HET VERHAAL ── */}
-      <section className="py-24 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <section className="py-16 sm:py-24 px-5 sm:px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Tekst */}
+          <ScrollReveal direction="right">
           <div>
             <p className="section-label">De geschiedenis</p>
             <h2 className="font-serif text-3xl md:text-4xl text-white mb-6">
@@ -363,8 +375,10 @@ export default async function HomePage() {
               </Link>
             </div>
           </div>
+          </ScrollReveal>
 
           {/* Foto van het echte kerkje */}
+          <ScrollReveal direction="left" delay={120}>
           <div className="relative">
             <div className="aspect-[4/5] bg-stone-800 overflow-hidden">
               <img
@@ -381,41 +395,47 @@ export default async function HomePage() {
               © Het Alems Kerkje
             </p>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* ── KENMERKEN ── */}
       <section className="py-16 border-y border-stone-800/50 bg-stone-900/40">
-        <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+        <div className="max-w-5xl mx-auto px-5 sm:px-6 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
           {[
             { value: '1719', label: 'Jaar van bouw' },
             { value: '~150 m²', label: 'Vloeroppervlakte' },
             { value: 'Alem', label: 'Gemeente Maasdriel' },
-          ].map((stat) => (
-            <div key={stat.label}>
+          ].map((stat, i) => (
+            <ScrollReveal key={stat.label} direction="up" delay={i * 80}>
+            <div>
               <p className="text-3xl md:text-4xl font-serif text-amber-400 mb-1">{stat.value}</p>
               <p className="text-xs tracking-[0.2em] uppercase text-stone-500">{stat.label}</p>
             </div>
+            </ScrollReveal>
           ))}
         </div>
       </section>
 
       {/* ── FOTO GALERIJ ── */}
-      <section className="py-24 px-6 bg-stone-900/20">
+      <section className="py-16 sm:py-24 px-5 sm:px-6 bg-stone-900/20">
         <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
           <div className="text-center mb-12">
             <p className="section-label">Het kerkje in beeld</p>
             <h2 className="font-serif text-3xl md:text-4xl text-white mb-4">Ontdek de locatie</h2>
             <span className="gold-line" />
           </div>
+          </ScrollReveal>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {[
               { src: '/images/kerkje-ext-2024.jpg',     alt: 'Het Alems Kerkje exterieur 2024',   caption: 'Exterieur 2024' },
               { src: '/images/kerkje-concert-2024.jpg', alt: 'Concert in Het Alems Kerkje',       caption: 'Concert' },
               { src: '/images/kerkje-sept-2023.jpg',    alt: 'Het Alems Kerkje september 2023',   caption: 'Najaar 2023' },
               { src: '/images/kerkje-event-2024.jpg',   alt: 'Presentatie in Het Alems Kerkje',   caption: 'Evenement' },
-            ].map((foto) => (
-              <div key={foto.src} className="group relative overflow-hidden aspect-square bg-stone-800">
+            ].map((foto, i) => (
+              <ScrollReveal key={foto.src} direction="scale" delay={i * 70}>
+              <div className="group relative overflow-hidden aspect-square bg-stone-800">
                 <img
                   src={foto.src}
                   alt={foto.alt}
@@ -427,13 +447,15 @@ export default async function HomePage() {
                   </p>
                 </div>
               </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* ── CTA BANNER ── */}
-      <section className="py-24 px-6 bg-gradient-to-r from-amber-900/20 via-stone-900/40 to-amber-900/20 border-y border-amber-800/20">
+      <section className="py-20 sm:py-24 px-5 sm:px-6 bg-gradient-to-r from-amber-900/20 via-stone-900/40 to-amber-900/20 border-y border-amber-800/20">
+        <ScrollReveal direction="scale">
         <div className="max-w-3xl mx-auto text-center">
           <p className="section-label">Uw evenement</p>
           <h2 className="font-serif text-3xl md:text-5xl text-white mb-6">
@@ -447,6 +469,7 @@ export default async function HomePage() {
             Neem contact op
           </Link>
         </div>
+        </ScrollReveal>
       </section>
 
       <Footer />

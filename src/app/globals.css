@@ -15,11 +15,15 @@
 
   html {
     scroll-behavior: smooth;
+    /* Prevent iOS bounce overscroll */
+    overscroll-behavior-y: none;
   }
 
   body,
   * {
     user-select: none;
+    /* Improve scrolling on iOS */
+    -webkit-tap-highlight-color: transparent;
   }
 
   /* Inputs en textareas blijven wel selecteerbaar */
@@ -35,6 +39,22 @@
     font-feature-settings: 'liga' 1, 'kern' 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Prevent text from being too small on mobile */
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Minimum touch target 44×44 for accessibility (WCAG 2.5.5)
+     Applied selectively — only inline <a> and <button> that don't already
+     have explicit sizing through Tailwind */
+  button:not([class]) {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  a:not([class]) {
+    min-height: 44px;
+    display: inline-block;
   }
 
   ::selection {
@@ -171,5 +191,24 @@
     width: max(177.78vh, 100%);
     height: max(56.25vw, 100%);
     transform: translate(-50%, -50%);
+  }
+
+  /* ── Stagger helpers ─────────────────────────────────────────────
+     Use delay-[Xms] Tailwind classes on individual ScrollReveal
+     children, or use these utility classes when not using JS reveal */
+  .stagger-1 { --reveal-delay: 0ms; }
+  .stagger-2 { --reveal-delay: 80ms; }
+  .stagger-3 { --reveal-delay: 160ms; }
+  .stagger-4 { --reveal-delay: 240ms; }
+
+  /* ── Responsive section padding ─────────────────────────────────
+     Consistent vertical spacing across screen sizes */
+  .section-pad {
+    @apply py-16 sm:py-20 md:py-24 px-5 sm:px-6;
+  }
+
+  /* ── Mobile-safe horizontal overflow guard ───────────────────── */
+  .overflow-x-safe {
+    @apply overflow-x-hidden;
   }
 }

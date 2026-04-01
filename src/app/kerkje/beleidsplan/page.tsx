@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import ScrollReveal from '@/components/ScrollReveal'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
@@ -94,6 +95,7 @@ export default function BeleidsplanPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-stone-950/60 via-stone-950/70 to-stone-950" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+          <ScrollReveal direction="up" delay={200}>
           <p className="text-xs tracking-[0.4em] uppercase text-amber-500 mb-4 font-light">
             Stichting Het Alems Kerkje
           </p>
@@ -135,6 +137,7 @@ export default function BeleidsplanPage() {
               ← Terug naar De Stichting
             </Link>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -165,11 +168,12 @@ export default function BeleidsplanPage() {
       </section>
 
       {/* ── Voorwoord ──────────────────────────────────────────────── */}
-      <section className="bg-stone-950 py-24 border-b border-stone-800">
-        <div className="max-w-5xl mx-auto px-6">
+      <section className="bg-stone-950 py-20 sm:py-24 border-b border-stone-800">
+        <div className="max-w-5xl mx-auto px-5 sm:px-6">
           <div className="grid md:grid-cols-5 gap-12 items-start">
             {/* Tekst */}
-            <div className="md:col-span-3">
+            <ScrollReveal direction="right" className="md:col-span-3">
+            <div>
               <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-4">Inleiding</p>
               <h2 className="font-serif text-3xl text-white mb-8">Voorwoord</h2>
               <div className="space-y-5 text-stone-400 text-sm leading-relaxed">
@@ -197,9 +201,11 @@ export default function BeleidsplanPage() {
                 </p>
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Citaat + foto */}
-            <div className="md:col-span-2 space-y-6">
+            <ScrollReveal direction="left" delay={120} className="md:col-span-2 space-y-6">
+            <div>
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
                   src="/images/kerkje-concert-2024.jpg"
@@ -223,16 +229,18 @@ export default function BeleidsplanPage() {
                 </div>
               </div>
             </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
       {/* ── H1 + H2: Missie & Doelstelling ────────────────────────── */}
-      <section id="h01" className="bg-stone-900 py-24 border-b border-stone-800">
-        <div className="max-w-5xl mx-auto px-6">
+      <section id="h01" className="bg-stone-900 py-20 sm:py-24 border-b border-stone-800">
+        <div className="max-w-5xl mx-auto px-5 sm:px-6">
           <div className="grid md:grid-cols-2 gap-12">
 
             {/* Missie & Visie */}
+            <ScrollReveal direction="right">
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-amber-500/50 font-mono text-xs">01</span>
@@ -257,8 +265,10 @@ export default function BeleidsplanPage() {
                 </p>
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Doelstelling */}
+            <ScrollReveal direction="left" delay={100}>
             <div id="h02">
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-amber-500/50 font-mono text-xs">02</span>
@@ -287,11 +297,12 @@ export default function BeleidsplanPage() {
                 ))}
               </div>
             </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* ── Fotobalk ───────────────────────────────────────────────── */}
+      {/* ── Fotobalk ─────────────────────────────────────────────── */}
       <div className="grid grid-cols-3 h-56 md:h-72">
         <div className="relative overflow-hidden">
           <Image
@@ -330,6 +341,7 @@ export default function BeleidsplanPage() {
 
           <div className="grid md:grid-cols-2 gap-10">
             {/* Algemene gegevens */}
+            <ScrollReveal direction="right">
             <div>
               <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-5">
                 Algemene gegevens
@@ -346,8 +358,10 @@ export default function BeleidsplanPage() {
                 ))}
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Bestuur */}
+            <ScrollReveal direction="left" delay={120}>
             <div>
               <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-5">Het bestuur</p>
               <div className="space-y-3">
@@ -383,6 +397,7 @@ export default function BeleidsplanPage() {
                 </p>
               </div>
             </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -393,6 +408,7 @@ export default function BeleidsplanPage() {
           <div className="grid md:grid-cols-2 gap-12">
 
             {/* Strategie */}
+            <ScrollReveal direction="right">
             <div id="h04">
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-amber-500/50 font-mono text-xs">04</span>
@@ -426,8 +442,10 @@ export default function BeleidsplanPage() {
                 <p className="absolute bottom-3 left-4 text-stone-400 text-xs">September 2023</p>
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Activiteiten */}
+            <ScrollReveal direction="left" delay={120}>
             <div id="h05">
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-amber-500/50 font-mono text-xs">05</span>
@@ -461,6 +479,7 @@ export default function BeleidsplanPage() {
                 <p className="absolute bottom-3 left-4 text-stone-400 text-xs">November 2024</p>
               </div>
             </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -472,8 +491,11 @@ export default function BeleidsplanPage() {
             <span className="text-amber-500/50 font-mono text-xs">06</span>
             <span className="flex-1 h-px bg-stone-800" />
           </div>
+          <ScrollReveal>
           <h2 className="font-serif text-3xl text-white mb-12">Financiën</h2>
+          </ScrollReveal>
 
+          <ScrollReveal delay={80}>
           <div className="grid sm:grid-cols-3 gap-4 mb-10">
             {financienBlokken.map((blok) => (
               <div
@@ -485,8 +507,10 @@ export default function BeleidsplanPage() {
               </div>
             ))}
           </div>
+          </ScrollReveal>
 
           {/* ANBI verklaring */}
+          <ScrollReveal delay={160}>
           <div className="bg-stone-900 border border-amber-800/20 p-6">
             <div className="flex items-start gap-4">
               <div className="bg-amber-600/15 border border-amber-600/30 px-3 py-1.5 flex-shrink-0">
@@ -505,7 +529,10 @@ export default function BeleidsplanPage() {
             </div>
           </div>
 
+          </ScrollReveal>
+
           {/* Foto brede balk */}
+          <ScrollReveal direction="scale" delay={80}>
           <div className="mt-12 relative aspect-[21/6] overflow-hidden">
             <Image
               src="/images/church-exterior.jpg"
@@ -520,6 +547,7 @@ export default function BeleidsplanPage() {
               </p>
             </div>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -532,6 +560,7 @@ export default function BeleidsplanPage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 items-start">
+            <ScrollReveal direction="right">
             <div>
               <h2 className="font-serif text-3xl text-white mb-4">
                 Duurzaamheid &amp; Milieuvriendelijkheid
@@ -552,8 +581,10 @@ export default function BeleidsplanPage() {
                 ))}
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Historische foto's */}
+            <ScrollReveal direction="left" delay={120}>
             <div className="space-y-4">
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
@@ -588,12 +619,14 @@ export default function BeleidsplanPage() {
                 </div>
               </div>
             </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
       {/* ── Footer CTA ─────────────────────────────────────────────── */}
       <section className="bg-stone-950 py-16 border-t border-stone-800">
+        <ScrollReveal direction="up">
         <div className="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div>
             <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-1">Beleidsplan 2025</p>
@@ -630,8 +663,7 @@ export default function BeleidsplanPage() {
               ← De Stichting
             </Link>
           </div>
-        </div>
-      </section>
+        </div>        </ScrollReveal>      </section>
 
       <Footer />
     </>

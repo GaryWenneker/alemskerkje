@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import ScrollReveal from '@/components/ScrollReveal'
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
@@ -167,6 +168,7 @@ export default function ActiviteitenPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-stone-950/50 via-stone-950/70 to-stone-950" />
         </div>
         <div className="relative z-10 max-w-5xl mx-auto">
+          <ScrollReveal direction="up" delay={200}>
           <p className="text-xs tracking-[0.4em] uppercase text-amber-500 mb-4 font-light">
             Verhuur &amp; gebruik
           </p>
@@ -187,6 +189,7 @@ export default function ActiviteitenPage() {
               </span>
             ))}
           </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -210,8 +213,9 @@ export default function ActiviteitenPage() {
       </div>
 
       {/* ── Mogelijkheden intro ────────────────────────────────────── */}
-      <section className="bg-stone-950 pt-20 pb-4 px-6 border-t border-stone-800">
+      <section className="bg-stone-950 pt-16 sm:pt-20 pb-4 px-5 sm:px-6 border-t border-stone-800">
         <div className="max-w-5xl mx-auto">
+          <ScrollReveal>
           <div className="grid md:grid-cols-3 gap-px bg-stone-800/40">
             <div className="bg-stone-900/60 p-7 md:col-span-2">
               <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-4">Mogelijkheden</p>
@@ -276,11 +280,12 @@ export default function ActiviteitenPage() {
               </a>
             </div>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* ── Activiteiten grid ──────────────────────────────────────── */}
-      <section className="bg-stone-950 py-16 px-6">
+      <section className="bg-stone-950 py-12 sm:py-16 px-5 sm:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end justify-between mb-12 gap-6">
             <div>
@@ -290,10 +295,10 @@ export default function ActiviteitenPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-stone-800/50">
-            {activiteiten.map((item) => (
+            {activiteiten.map((item, i) => (
+              <ScrollReveal key={item.title} direction="up" delay={(i % 3) * 80}>
               <article
-                key={item.title}
-                className="group bg-stone-950 flex flex-col overflow-hidden hover:bg-stone-900/60 transition-colors duration-300"
+                className="group bg-stone-950 flex flex-col overflow-hidden hover:bg-stone-900/60 transition-colors duration-300 h-full"
               >
                 {/* Foto */}
                 <div className="relative w-full aspect-[4/3] overflow-hidden">
@@ -331,15 +336,17 @@ export default function ActiviteitenPage() {
                   </ul>
                 </div>
               </article>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* ── Vaste activiteiten ─────────────────────────────────────── */}
-      <section className="bg-stone-900 py-24 px-6 border-t border-stone-800">
+      <section className="bg-stone-900 py-20 sm:py-24 px-5 sm:px-6 border-t border-stone-800">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-start">
+            <ScrollReveal direction="right">
             <div>
               <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-4">
                 Vaste gebruikers
@@ -361,8 +368,10 @@ export default function ActiviteitenPage() {
                 ))}
               </div>
             </div>
+            </ScrollReveal>
 
             {/* Foto + info */}
+            <ScrollReveal direction="left" delay={120}>
             <div className="space-y-6">
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
@@ -395,19 +404,22 @@ export default function ActiviteitenPage() {
                 ))}
               </div>
             </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* ── Tarieven ───────────────────────────────────────────────── */}
-      <section className="bg-stone-950 py-24 px-6 border-t border-stone-800">
+      {/* ── Tarieven ────────────────────────────────────────────── */}
+      <section className="bg-stone-950 py-16 sm:py-24 px-5 sm:px-6 border-t border-stone-800">
         <div className="max-w-5xl mx-auto">
+          <ScrollReveal>
           <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-4">Verhuur</p>
           <h2 className="font-serif text-3xl text-white mb-4">Tarieven</h2>
           <p className="text-stone-400 text-sm mb-12 max-w-2xl leading-relaxed">
             Starttarief inclusief het eerste uur. Het tarief is afhankelijk van de gebruiker
             (categorie A t/m D) en het doel van de verhuur.
           </p>
+          </ScrollReveal>
 
           {/* ── Tarieftabel ── */}
           <div className="overflow-x-auto mb-3">
@@ -558,7 +570,7 @@ export default function ActiviteitenPage() {
       </section>
 
       {/* ── CTA ────────────────────────────────────────────────────── */}
-      <section className="relative py-28 px-6 overflow-hidden">
+      <section className="relative py-24 sm:py-28 px-5 sm:px-6 overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/church-exterior.jpg"
@@ -568,6 +580,7 @@ export default function ActiviteitenPage() {
           />
           <div className="absolute inset-0 bg-stone-950/60" />
         </div>
+        <ScrollReveal direction="scale">
         <div className="relative z-10 max-w-3xl mx-auto text-center">
           <p className="text-xs tracking-[0.4em] uppercase text-amber-500 mb-4">Interesse?</p>
           <h2 className="font-serif text-3xl md:text-4xl text-white mb-6 leading-tight">
@@ -586,12 +599,13 @@ export default function ActiviteitenPage() {
             </Link>
             <a
               href="mailto:programmacommissie@hetalemskerkje.nl"
-              className="inline-flex items-center gap-2 border border-stone-600 hover:border-stone-400 text-stone-300 hover:text-white px-8 py-3.5 text-xs tracking-[0.25em] uppercase transition-colors duration-200"
+              className="inline-flex items-center gap-2 border border-stone-600 hover:border-stone-400 text-stone-300 hover:text-white px-8 py-3.5 text-xs tracking-[0.25em] uppercase transition-colors duration-200 break-all sm:break-normal text-center"
             >
               programmacommissie@hetalemskerkje.nl
             </a>
           </div>
         </div>
+        </ScrollReveal>
       </section>
 
       <Footer />

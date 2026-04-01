@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import ScrollReveal from '@/components/ScrollReveal'
 import FeaturedEventCard from '@/components/FeaturedEventCard'
 import EventCard from '@/components/EventCard'
 import { db } from '@/db'
@@ -266,6 +267,7 @@ export default async function AgendaPage() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto">
+          <ScrollReveal direction="up" delay={200}>
           <p className="section-label mb-4">Activiteiten &amp; Evenementen</p>
           <h1 className="font-serif text-6xl md:text-8xl text-white mb-6 leading-none">
             Agenda
@@ -274,6 +276,7 @@ export default async function AgendaPage() {
             Ontdek wat er speelt in Het Alems Kerkje — concerten, lezingen,
             yoga, tentoonstellingen en meer.
           </p>
+          </ScrollReveal>
 
           {/* Live teller */}
           {upcoming.length > 0 && (
@@ -296,6 +299,7 @@ export default async function AgendaPage() {
       {/* ── GEEN ACTIVITEITEN ── */}
       {upcoming.length === 0 && (
         <section className="py-24 px-6">
+          <ScrollReveal direction="up">
           <div className="max-w-2xl mx-auto text-center">
             <div className="w-16 h-px bg-amber-700/50 mx-auto mb-8" />
             <p className="font-serif text-2xl text-stone-300 mb-3">Nog niets gepland</p>
@@ -307,6 +311,7 @@ export default async function AgendaPage() {
               Stel een activiteit voor
             </Link>
           </div>
+          </ScrollReveal>
         </section>
       )}
 
@@ -321,6 +326,7 @@ export default async function AgendaPage() {
           <section className="px-6 py-12">
             <div className="max-w-7xl mx-auto">
               <p className="section-label mb-6">Uitgelicht evenement</p>
+              <ScrollReveal direction="up" delay={120}>
               <FeaturedEventCard
                 title={featured.title}
                 category={featured.category ?? null}
@@ -333,6 +339,7 @@ export default async function AgendaPage() {
                 img={img}
                 videoId={videoId}
               />
+              </ScrollReveal>
             </div>
           </section>
         )
@@ -349,14 +356,14 @@ export default async function AgendaPage() {
               </div>
             )}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-              {regular.map((event) => {
+              {regular.map((event, i) => {
                 const img = getEventImage(event) ?? getFallbackImage(event.category, event.id, event.title)
                 const d   = new Date(event.date)
                 const videoId = event.videoUrl && event.videoType === 'youtube'
                   ? getYouTubeId(event.videoUrl) : null
                 return (
+                  <ScrollReveal key={event.id} direction="up" delay={(i % 3) * 80}>
                   <EventCard
-                    key={event.id}
                     id={event.id}
                     title={event.title}
                     category={event.category ?? null}
@@ -374,6 +381,7 @@ export default async function AgendaPage() {
                     hasVideo={!!event.videoUrl}
                     variant="card"
                   />
+                  </ScrollReveal>
                 )
               })}
             </div>
@@ -384,6 +392,7 @@ export default async function AgendaPage() {
       {/* ── CTA BLOK ── */}
       <section className="px-6 py-16">
         <div className="max-w-7xl mx-auto">
+          <ScrollReveal direction="scale">
           <div className="relative overflow-hidden p-10 md:p-14
                           flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
             {/* Achtergrond: concertfoto met amber gloed */}
@@ -414,6 +423,7 @@ export default async function AgendaPage() {
               </Link>
             </div>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -422,12 +432,14 @@ export default async function AgendaPage() {
         <section className="px-6 pb-20">
           <div className="max-w-7xl mx-auto">
             <div className="border-t border-stone-800/50 pt-12">
+              <ScrollReveal direction="up">
               <div className="flex items-center gap-4 mb-8">
                 <div>
                   <p className="section-label mb-1">Terugblik</p>
                   <h2 className="font-serif text-2xl text-white">Afgelopen activiteiten</h2>
                 </div>
               </div>
+              </ScrollReveal>
               <div className="divide-y divide-stone-800/40">
                 {past.slice(0, 8).map((event) => {
                   const d = new Date(event.date)
