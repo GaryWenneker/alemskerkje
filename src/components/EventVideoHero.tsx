@@ -90,7 +90,7 @@ export default function EventVideoHero({
     : null
 
   return (
-    <div className="relative w-full aspect-video overflow-hidden bg-stone-950 group">
+    <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] md:aspect-video overflow-hidden bg-stone-950 group">
 
       {/* ── VIDEO ── */}
       {videoType === 'youtube' && embedSrc && (
@@ -115,12 +115,12 @@ export default function EventVideoHero({
       )}
 
       {/* ── BOVEN: gradient + titel ── */}
-      <div className="video-overlay-top absolute top-0 left-0 right-0 z-10 h-[45%] pointer-events-none">
-        <div className="pt-7 px-8 md:px-12">
-          <p className="section-label mb-1.5 [text-shadow:0_1px_8px_rgba(0,0,0,1)]">
+      <div className="video-overlay-top absolute top-0 left-0 right-0 z-10 h-[42%] pointer-events-none">
+        <div className="pt-5 sm:pt-7 px-5 sm:px-8 md:px-12">
+          <p className="section-label mb-1 [text-shadow:0_1px_8px_rgba(0,0,0,1)]">
             Evenement
           </p>
-          <h2 className="font-serif text-2xl md:text-4xl lg:text-5xl text-white leading-tight max-w-3xl
+          <h2 className="font-serif text-xl sm:text-2xl md:text-4xl lg:text-5xl text-white leading-tight max-w-3xl
                          [text-shadow:0_2px_8px_rgba(0,0,0,1),0_4px_24px_rgba(0,0,0,0.85),0_8px_48px_rgba(0,0,0,0.6)]">
             {title}
           </h2>
@@ -128,19 +128,19 @@ export default function EventVideoHero({
       </div>
 
       {/* ── ONDER: gradient + datum/knoppen ── */}
-      <div className="video-overlay-bottom absolute bottom-0 left-0 right-0 z-10 h-2/5 flex flex-col justify-end">
-        <div className="pb-6 px-8 md:px-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      <div className="video-overlay-bottom absolute bottom-0 left-0 right-0 z-10 h-auto flex flex-col justify-end">
+        <div className="pb-4 sm:pb-6 px-5 sm:px-8 md:px-12 flex flex-col gap-3">
 
           {/* Datum · Tijd · Locatie */}
-          <div className="flex flex-wrap gap-5">
+          <div className="flex flex-wrap gap-3 sm:gap-5">
             <div>
-              <p className="text-[10px] tracking-widest uppercase text-stone-400 mb-0.5">Datum</p>
-              <p className="text-white text-sm capitalize">{formattedDate}</p>
+              <p className="text-[9px] sm:text-[10px] tracking-widest uppercase text-stone-400 mb-0.5">Datum</p>
+              <p className="text-white text-xs sm:text-sm capitalize">{formattedDate}</p>
             </div>
             {(timeStart || timeEnd) && (
               <div>
-                <p className="text-[10px] tracking-widest uppercase text-stone-400 mb-0.5">Tijd</p>
-                <p className="text-amber-400 text-sm">
+                <p className="text-[9px] sm:text-[10px] tracking-widest uppercase text-stone-400 mb-0.5">Tijd</p>
+                <p className="text-amber-400 text-xs sm:text-sm">
                   {timeStart}
                   {timeEnd && <span className="text-stone-400"> – {timeEnd}</span>}
                 </p>
@@ -155,11 +155,11 @@ export default function EventVideoHero({
           </div>
 
           {/* Knoppen + geluid */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <button
               onClick={toggleMute}
               className="flex items-center gap-1.5 bg-black/50 hover:bg-black/70 text-white
-                         text-xs px-3 py-2 rounded-full border border-white/10
+                         text-xs px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full border border-white/10
                          hover:border-amber-500/40 transition-all duration-200 backdrop-blur-sm"
               aria-label={muted ? 'Geluid inschakelen' : 'Geluid uitschakelen'}
             >
@@ -173,14 +173,14 @@ export default function EventVideoHero({
                   <path d="M15.932 7.757a.75.75 0 0 1 1.061 0 6 6 0 0 1 0 8.486.75.75 0 0 1-1.06-1.061 4.5 4.5 0 0 0 0-6.364.75.75 0 0 1 0-1.06Z" />
                 </svg>
               )}
-              <span>{muted ? 'Geluid aan' : 'Geluid uit'}</span>
+              <span className="hidden sm:inline">{muted ? 'Geluid aan' : 'Geluid uit'}</span>
             </button>
 
             {ticketUrl && (
               <button
                 type="button"
                 onClick={() => setTicketOpen(true)}
-                className="btn-gold py-2 px-5 text-xs"
+                className="btn-gold py-1.5 sm:py-2 px-4 sm:px-5 text-xs"
               >
                 Kaarten bestellen
               </button>
@@ -189,7 +189,7 @@ export default function EventVideoHero({
               <button
                 type="button"
                 onClick={() => setPanelOpen(true)}
-                className="btn-ghost py-2 px-5 text-xs"
+                className="btn-ghost py-1.5 sm:py-2 px-4 sm:px-5 text-xs"
               >
                 Meer info
               </button>
