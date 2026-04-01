@@ -138,7 +138,6 @@ export default async function HomePage() {
       {/* ── UITGELICHT VIDEO-EVENEMENT ── */}
       {featuredVideo?.videoUrl && featuredVideo.videoType && (
         <section className="border-b border-stone-800/50">
-          <div className="max-w-7xl mx-auto">
           <EventVideoHero
             title={featuredVideo.title}
             videoUrl={featuredVideo.videoUrl}
@@ -152,7 +151,6 @@ export default async function HomePage() {
             description={featuredVideo.description}
             content={featuredVideo.content}
           />
-          </div>
         </section>
       )}
 
