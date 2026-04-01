@@ -1,5 +1,7 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import Image from 'next/image'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -27,11 +29,18 @@ export default function DeStichtingPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative bg-stone-950 pt-40 pb-20 overflow-hidden">
-        <div className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, #d97706 0%, transparent 70%)' }}
-        />
-        <div className="relative max-w-4xl mx-auto px-6 text-center">
+      <section className="relative bg-stone-950 pt-40 pb-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="https://www.hetalemskerkje.nl/wp-content/uploads/2025/11/PHOTO-2025-11-07-08-20-54-2.jpg"
+            alt="Het Alems Kerkje"
+            fill
+            priority
+            className="object-cover object-center opacity-25"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-stone-950/40 via-stone-950/70 to-stone-950" />
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <p className="text-xs tracking-[0.4em] uppercase text-amber-500 mb-4 font-light">Informatie over</p>
           <h1 className="font-serif text-4xl md:text-6xl text-white mb-6 leading-tight">
             De Stichting
@@ -142,14 +151,12 @@ export default function DeStichtingPage() {
             <p className="text-stone-400 text-sm leading-relaxed mb-6">
               Voor het beleid van De Stichting Het Alems Kerkje over het jaar 2025 verwijzen we u naar het beleidsplan.
             </p>
-            <a
-              href="https://www.hetalemskerkje.nl/beleidsplan/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/kerkje/beleidsplan"
               className="inline-block border border-amber-600/60 hover:border-amber-500 hover:bg-amber-600/10 text-amber-400 hover:text-amber-300 px-6 py-2.5 text-xs tracking-[0.2em] uppercase transition-all duration-200"
             >
               Bekijk het beleidsplan →
-            </a>
+            </Link>
           </div>
         </div>
       </section>

@@ -13,7 +13,6 @@ const kerkjeLinks = [
 ]
 
 const navLinks = [
-  { href: '/agenda', label: 'Agenda' },
   { href: '/activiteiten', label: 'Activiteiten' },
   { href: '/nieuws', label: 'Nieuws' },
   { href: '/contact', label: 'Contact' },
@@ -73,6 +72,19 @@ export default function Navbar() {
 
         {/* Desktop navigatie */}
         <ul className="hidden md:flex items-center gap-8">
+
+          {/* Agenda — eerste link */}
+          <li>
+            <Link
+              href="/agenda"
+              className={cn(
+                'text-xs tracking-[0.15em] uppercase transition-colors duration-200',
+                pathname === '/agenda' ? 'text-amber-400' : 'text-stone-300 hover:text-white',
+              )}
+            >
+              Agenda
+            </Link>
+          </li>
 
           {/* Het Kerkje dropdown */}
           <li ref={dropdownRef} className="relative">
@@ -178,6 +190,19 @@ export default function Navbar() {
         )}
       >
         <ul className="px-6 pb-6 pt-2 flex flex-col gap-1">
+
+          {/* Agenda — eerste link */}
+          <li>
+            <Link
+              href="/agenda"
+              className={cn(
+                'block text-sm tracking-widest uppercase py-3 transition-colors',
+                pathname === '/agenda' ? 'text-amber-400' : 'text-stone-300 hover:text-white',
+              )}
+            >
+              Agenda
+            </Link>
+          </li>
 
           {/* Het Kerkje accordion mobiel */}
           <li>

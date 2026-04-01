@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import { db } from '@/db'
 import { contactMessages } from '@/db/schema'
@@ -28,11 +29,24 @@ export default function ContactPage() {
     <>
       <Navbar />
 
-      {/* Header */}
-      <section className="pt-32 pb-16 px-6 border-b border-stone-800/50">
-        <div className="max-w-7xl mx-auto">
+      {/* Hero */}
+      <section className="relative bg-stone-950 pt-40 pb-24 px-6 overflow-hidden border-b border-stone-800/50">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/alem-maas-pont.jpg"
+            alt="Pont over de Maas bij Alem, gemeente Maasdriel"
+            fill
+            priority
+            className="object-cover object-center opacity-35"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-stone-950/50 via-stone-950/75 to-stone-950" />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto">
           <p className="section-label">Bereik ons</p>
           <h1 className="font-serif text-4xl md:text-6xl text-white">Contact</h1>
+          <p className="text-stone-400 mt-4 max-w-xl leading-relaxed">
+            Heeft u vragen of wilt u een activiteit plannen? We horen graag van u.
+          </p>
         </div>
       </section>
 

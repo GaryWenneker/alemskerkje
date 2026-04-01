@@ -1,5 +1,7 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import DoneerSectie from '@/components/DoneerSectie'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -7,12 +9,6 @@ export const metadata: Metadata = {
   description: 'Word vriend, doneer of word vrijwilliger bij Het Alems Kerkje. Samen houden we dit bijzondere monument levend.',
 }
 
-const donatieBedragen = [
-  { bedrag: '€ 10', url: 'https://payment-links.mollie.com/payment/dSYNpCpbKAbC78dt7Zknn' },
-  { bedrag: '€ 25', url: 'https://payment-links.mollie.com/payment/w3ptZAFhVDoM45RX6uwa8' },
-  { bedrag: '€ 50', url: 'https://payment-links.mollie.com/payment/F5yR9vXLmLm3FQ5e4582o' },
-  { bedrag: '€ 100', url: 'https://payment-links.mollie.com/payment/hnax9fo5Ffxp9TwUE6R3g' },
-]
 
 const vriendVoordelen = [
   'Voorrang bij kaartverkoop voor evenementen',
@@ -35,11 +31,18 @@ export default function VriendenVanPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative bg-stone-950 pt-40 pb-20 overflow-hidden">
-        <div className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, #d97706 0%, transparent 70%)' }}
-        />
-        <div className="relative max-w-4xl mx-auto px-6 text-center">
+      <section className="relative bg-stone-950 pt-40 pb-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="https://www.hetalemskerkje.nl/wp-content/uploads/2025/11/PHOTO-2025-11-07-08-20-54-2.jpg"
+            alt="Het Alems Kerkje"
+            fill
+            priority
+            className="object-cover object-center opacity-50"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-stone-950/30 via-stone-950/50 to-stone-950" />
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <p className="text-xs tracking-[0.4em] uppercase text-amber-500 mb-4 font-light">Help mee en</p>
           <h1 className="font-serif text-4xl md:text-6xl text-white mb-6 leading-tight">
             Word Vriend
@@ -94,39 +97,7 @@ export default function VriendenVanPage() {
         </div>
       </section>
 
-      {/* Doneer */}
-      <section className="bg-stone-900 py-24 border-b border-stone-800">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <p className="text-xs tracking-[0.3em] uppercase text-amber-500 mb-4">Eenmalige gift</p>
-            <h2 className="font-serif text-3xl text-white mb-4">Doneer</h2>
-            <p className="text-stone-400 text-sm max-w-lg mx-auto">
-              Steun Het Alems Kerkje met een eenmalige gift naar keuze. Betaal veilig met iDEAL via Mollie.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {donatieBedragen.map((d) => (
-              <a
-                key={d.bedrag}
-                href={d.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-stone-950 border border-stone-700 hover:border-amber-600 hover:bg-amber-600/5 p-6 text-center transition-all duration-200"
-              >
-                <span className="font-serif text-2xl text-white group-hover:text-amber-400 transition-colors block mb-2">
-                  {d.bedrag}
-                </span>
-                <span className="text-xs tracking-widest uppercase text-stone-500 group-hover:text-stone-400">
-                  Doneer
-                </span>
-              </a>
-            ))}
-          </div>
-          <p className="text-center text-stone-600 text-xs mt-6">
-            Veilig betalen met iDEAL · Powered by Mollie
-          </p>
-        </div>
-      </section>
+      <DoneerSectie />
 
       {/* Vrijwilliger */}
       <section className="bg-stone-950 py-24">

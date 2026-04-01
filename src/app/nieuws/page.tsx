@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
+import Image from 'next/image'
 import { db } from '@/db'
 import { articles } from '@/db/schema'
 import { eq, desc } from 'drizzle-orm'
@@ -31,10 +32,24 @@ export default async function NieuwsPage() {
     <>
       <Navbar />
 
-      <section className="pt-32 pb-16 px-6 border-b border-stone-800/50">
-        <div className="max-w-7xl mx-auto">
-          <p className="section-label">Verhalen & aankondigingen</p>
+      {/* Hero */}
+      <section className="relative bg-stone-950 pt-40 pb-24 px-6 overflow-hidden border-b border-stone-800/50">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/alem-sint-odradastraat.jpg"
+            alt="Sint Odradastraat in Alem, gemeente Maasdriel"
+            fill
+            priority
+            className="object-cover object-center opacity-35"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-stone-950/50 via-stone-950/75 to-stone-950" />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto">
+          <p className="section-label">Verhalen &amp; aankondigingen</p>
           <h1 className="font-serif text-4xl md:text-6xl text-white">Nieuws</h1>
+          <p className="text-stone-400 mt-4 max-w-xl leading-relaxed">
+            Het laatste nieuws en achtergrondverhalen van Het Alems Kerkje.
+          </p>
         </div>
       </section>
 

@@ -36,28 +36,40 @@ async function getUpcomingEvents() {
 
 const activiteitenItems = [
   {
-    image: '/images/activiteiten/tentoonstellingen.jpg',
+    // Echte tentoonstellingsfoto: art gallery interieur
+    image: '/images/activiteiten/tentoonstelling-2.jpg',
     title: 'Tentoonstellingen',
     description:
       'Kunst, fotografie, erfgoed of natuur. De stenen muren vertellen al drie eeuwen verhalen — laat uw werk het volgende hoofdstuk schrijven.',
+    href: '/activiteiten',
+    accentColor: 'bg-amber-400',
   },
   {
+    // Huwelijksceremonie in een kerk — correct
     image: '/images/activiteiten/huwelijksceremonie.jpg',
     title: 'Huwelijksceremonie',
     description:
       'Trouw op een locatie met ziel. De intieme sfeer van een kerk uit 1719 als decor voor jullie mooiste dag.',
+    href: '/activiteiten',
+    accentColor: 'bg-rose-400',
   },
   {
+    // Concert in het Alems Kerkje — correct
     image: '/images/activiteiten/concerten.jpg',
     title: 'Concerten',
     description:
       'Akoestisch meesterwerkje. Kleinschalige concerten met een uitzonderlijke akoestiek in een historische setting.',
+    href: '/activiteiten',
+    accentColor: 'bg-purple-400',
   },
   {
-    image: '/images/activiteiten/cursussen.jpg',
+    // Echte workshop/yoga foto
+    image: '/images/activiteiten/yoga-1.jpg',
     title: 'Cursussen & Workshops',
     description:
       'Yoga, zang, mindfulness of schilderen. Leer, groei en ervaar in een omgeving die rust en inspiratie uitstraalt.',
+    href: '/activiteiten',
+    accentColor: 'bg-emerald-400',
   },
 ]
 
@@ -120,22 +132,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── KENMERKEN ── */}
-      <section className="py-16 border-y border-stone-800/50 bg-stone-900/40">
-        <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-          {[
-            { value: '1719', label: 'Jaar van bouw' },
-            { value: '~150 m²', label: 'Vloeroppervlakte' },
-            { value: 'Alem', label: 'Gemeente Maasdriel' },
-          ].map((stat) => (
-            <div key={stat.label}>
-              <p className="text-3xl md:text-4xl font-serif text-amber-400 mb-1">{stat.value}</p>
-              <p className="text-xs tracking-[0.2em] uppercase text-stone-500">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ── UITGELICHT VIDEO-EVENEMENT ── */}
       {featuredVideo?.videoUrl && featuredVideo.videoType && (
         <section className="border-b border-stone-800/50">
@@ -156,56 +152,6 @@ export default async function HomePage() {
           </div>
         </section>
       )}
-
-      {/* ── ACTIVITEITEN ── */}
-      <section className="py-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-10">
-            <p className="section-label">Veel soorten</p>
-            <h2 className="font-serif text-3xl md:text-4xl text-white mb-4">
-              Activiteiten
-            </h2>
-            <p className="text-stone-400 max-w-xl mx-auto text-sm leading-relaxed mb-4">
-              Het Alems Kerkje wordt op aanvraag verhuurd voor sociaal-culturele activiteiten.
-              Bekijk de mogelijkheden die wij op deze prachtige locatie bieden.
-            </p>
-            <span className="gold-line" />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
-            {activiteitenItems.map((item) => (
-              <div key={item.title} className="relative overflow-hidden group aspect-[3/4]">
-                {/* Foto */}
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                {/* Donkere overlay altijd aanwezig, sterker bij hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent
-                                group-hover:via-black/50 transition-all duration-500" />
-                {/* Tekst onderaan */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                  <h3 className="font-serif text-xl text-white mb-2
-                                 [text-shadow:0_2px_8px_rgba(0,0,0,0.8)]">
-                    {item.title}
-                  </h3>
-                  <p className="text-stone-300 text-sm leading-relaxed opacity-0 group-hover:opacity-100
-                                transition-opacity duration-500 max-h-0 group-hover:max-h-32 overflow-hidden">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link href="/activiteiten" className="btn-ghost">
-              Alle activiteiten bekijken
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* ── AGENDA ── */}
       <section className="py-24 px-6 bg-stone-900/30">
@@ -258,6 +204,132 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── ACTIVITEITEN ── */}
+      <section className="py-24 px-6" aria-labelledby="activiteiten-heading">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-10">
+            <p className="section-label">Veel soorten</p>
+            <h2 id="activiteiten-heading" className="font-serif text-3xl md:text-4xl text-white mb-4">
+              Activiteiten
+            </h2>
+            <p className="text-stone-400 max-w-xl mx-auto text-sm leading-relaxed mb-4">
+              Het Alems Kerkje wordt op aanvraag verhuurd voor sociaal-culturele activiteiten.
+              Bekijk de mogelijkheden die wij op deze prachtige locatie bieden.
+            </p>
+            <span className="gold-line" aria-hidden="true" />
+          </div>
+
+          {/* Grid — 1 kolom mobiel, 2×2 tablet, 4 breed desktop */}
+          <ul
+            role="list"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-stone-800/30"
+          >
+            {activiteitenItems.map((item) => (
+              <li key={item.title} className="bg-stone-950">
+                <Link
+                  href={item.href}
+                  aria-label={`Meer informatie over ${item.title}`}
+                  className={[
+                    'group relative overflow-hidden block',
+                    'aspect-[4/3] sm:aspect-[3/4]',
+                    // Zichtbaar focusring voor toetsenbordgebruikers
+                    'focus-visible:outline-none focus-visible:ring-2',
+                    'focus-visible:ring-amber-400 focus-visible:ring-inset',
+                  ].join(' ')}
+                >
+                  {/* ── FOTO ── decoratief, alt leeg want Link-label geeft context */}
+                  <img
+                    src={item.image}
+                    alt=""
+                    aria-hidden="true"
+                    className={[
+                      'absolute inset-0 w-full h-full object-cover',
+                      'brightness-[0.65] group-hover:brightness-[0.80]',
+                      // Schaal-animatie alleen als gebruiker geen bezwaar heeft
+                      'motion-safe:transition-[transform,filter] motion-safe:duration-700 motion-safe:ease-out',
+                      'motion-safe:group-hover:scale-110',
+                    ].join(' ')}
+                  />
+
+                  {/* ── GRADIENT OVERLAY ── */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent
+                                  motion-safe:transition-opacity motion-safe:duration-500" />
+
+                  {/* ── KLEUR-ACCENT lijn bovenaan die schuift bij hover ── */}
+                  <div
+                    aria-hidden="true"
+                    className={[
+                      'absolute top-0 left-0 right-0 h-[3px]',
+                      item.accentColor,
+                      'origin-left scale-x-0 group-hover:scale-x-100',
+                      'motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out',
+                      // Geen animatie bij reduced-motion: direct tonen
+                      'motion-reduce:scale-x-100 motion-reduce:opacity-0 motion-reduce:group-hover:opacity-100',
+                    ].join(' ')}
+                  />
+
+                  {/* ── CONTENT ── */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
+                    <div
+                      className={[
+                        'motion-safe:translate-y-3 motion-safe:group-hover:translate-y-0',
+                        'motion-safe:transition-transform motion-safe:duration-500',
+                      ].join(' ')}
+                    >
+                      <h3 className="font-serif text-xl sm:text-2xl text-white mb-2
+                                     [text-shadow:0_2px_12px_rgba(0,0,0,0.9)]">
+                        {item.title}
+                      </h3>
+
+                      {/* Beschrijving — verborgen op mobiel tenzij gefocust/gehoverd */}
+                      <p
+                        className={[
+                          'text-stone-300 text-sm leading-relaxed',
+                          // Zichtbaar bij hover/focus (motion-safe: overgang)
+                          'motion-safe:opacity-0 motion-safe:group-hover:opacity-100',
+                          'motion-safe:transition-opacity motion-safe:duration-300 motion-safe:delay-75',
+                          // Altijd zichtbaar als geen motion-voorkeur bestaat
+                          'motion-reduce:opacity-100',
+                          // Max-hoogte animatie voor soepele onthulling
+                          'motion-safe:max-h-0 motion-safe:overflow-hidden',
+                          'motion-safe:group-hover:max-h-28',
+                          'motion-reduce:max-h-none',
+                        ].join(' ')}
+                      >
+                        {item.description}
+                      </p>
+
+                      {/* Pijl — verschijnt bij hover */}
+                      <p
+                        aria-hidden="true"
+                        className={[
+                          'mt-3 flex items-center gap-1.5 text-amber-400 text-xs tracking-widest uppercase',
+                          'motion-safe:opacity-0 motion-safe:group-hover:opacity-100',
+                          'motion-safe:transition-opacity motion-safe:duration-300 motion-safe:delay-100',
+                          'motion-reduce:opacity-100',
+                        ].join(' ')}
+                      >
+                        <span>Ontdek meer</span>
+                        <span
+                          className="motion-safe:group-hover:translate-x-1
+                                     motion-safe:transition-transform motion-safe:duration-300"
+                        >→</span>
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <div className="text-center mt-12">
+            <Link href="/activiteiten" className="btn-ghost">
+              Alle activiteiten bekijken
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── HET VERHAAL ── */}
       <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -294,8 +366,8 @@ export default async function HomePage() {
           <div className="relative">
             <div className="aspect-[4/5] bg-stone-800 overflow-hidden">
               <img
-                src="/images/church-exterior.jpg"
-                alt="Het Alems Kerkje, exterieur — Rijksdienst voor het Cultureel Erfgoed"
+                src="/images/kerkje-sept-2023.jpg"
+                alt="Het Alems Kerkje, exterieur september 2023"
                 className="w-full h-full object-cover object-center"
               />
             </div>
@@ -304,9 +376,25 @@ export default async function HomePage() {
             <div className="absolute -top-4 -left-4 w-16 h-16 border border-amber-600/20" />
             {/* Foto-attribuut */}
             <p className="absolute bottom-2 left-2 text-[10px] text-stone-500/70">
-              © RCE — CC BY-SA 4.0
+              © Het Alems Kerkje
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* ── KENMERKEN ── */}
+      <section className="py-16 border-y border-stone-800/50 bg-stone-900/40">
+        <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+          {[
+            { value: '1719', label: 'Jaar van bouw' },
+            { value: '~150 m²', label: 'Vloeroppervlakte' },
+            { value: 'Alem', label: 'Gemeente Maasdriel' },
+          ].map((stat) => (
+            <div key={stat.label}>
+              <p className="text-3xl md:text-4xl font-serif text-amber-400 mb-1">{stat.value}</p>
+              <p className="text-xs tracking-[0.2em] uppercase text-stone-500">{stat.label}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -320,10 +408,10 @@ export default async function HomePage() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {[
-              { src: '/api/images/static/church-exterior.jpg', alt: 'Exterieur', caption: 'Voorgevel' },
-              { src: '/api/images/static/church-north.jpg', alt: 'Noordkant', caption: 'Noordzijde' },
-              { src: '/api/images/static/church-southwest.jpg', alt: 'Zuidwestkant', caption: 'Zuidwest aanzicht' },
-              { src: '/api/images/static/church-2010.jpg', alt: 'Kerkje 2010', caption: 'Historisch overzicht' },
+              { src: '/images/kerkje-ext-2024.jpg',     alt: 'Het Alems Kerkje exterieur 2024',   caption: 'Exterieur 2024' },
+              { src: '/images/kerkje-concert-2024.jpg', alt: 'Concert in Het Alems Kerkje',       caption: 'Concert' },
+              { src: '/images/kerkje-sept-2023.jpg',    alt: 'Het Alems Kerkje september 2023',   caption: 'Najaar 2023' },
+              { src: '/images/kerkje-event-2024.jpg',   alt: 'Presentatie in Het Alems Kerkje',   caption: 'Evenement' },
             ].map((foto) => (
               <div key={foto.src} className="group relative overflow-hidden aspect-square bg-stone-800">
                 <img
@@ -339,9 +427,6 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
-          <p className="text-center text-stone-600 text-[11px] mt-4 tracking-wide">
-            Historische foto&apos;s: Rijksdienst voor het Cultureel Erfgoed (RCE) — CC BY-SA 4.0
-          </p>
         </div>
       </section>
 

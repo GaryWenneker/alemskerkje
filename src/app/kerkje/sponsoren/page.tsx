@@ -73,12 +73,18 @@ export default function SponsorenPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative bg-stone-950 pt-40 pb-20 overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, #d97706 0%, transparent 70%)' }}
-        />
-        <div className="relative max-w-4xl mx-auto px-6 text-center">
+      <section className="relative bg-stone-950 pt-40 pb-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="https://www.hetalemskerkje.nl/wp-content/uploads/2025/11/PHOTO-2025-11-07-08-20-54.jpg"
+            alt="Het Alems Kerkje"
+            fill
+            priority
+            className="object-cover object-center opacity-25"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-stone-950/40 via-stone-950/70 to-stone-950" />
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <p className="text-xs tracking-[0.4em] uppercase text-amber-500 mb-4 font-light">Onze gewaardeerde</p>
           <h1 className="font-serif text-4xl md:text-6xl text-white mb-6 leading-tight">
             Sponsoren
