@@ -9,20 +9,6 @@ To override deployment lock (USE WITH CAUTION), use:
 Warning: Only use --prod-if-unlocked if you are absolutely sure you want to override the deployment lock.
 
 ? Would you like to "unlock" deployments for production context to proceed? 
-(y/N) [1A[6D[82CWarning: Detected unsettled top-level await at file:///C:/Users/gary.wenneker/AppData/Roaming/nvm/v24.13.0/node_modules/netlify-cli/bin/run.js:66
-await main()
-^
-
-
-
-[1B Â»   Error: Netlify CLI has terminated unexpectedly
-This is a problem with the Netlify CLI, not with your application.
-If you recently updated the CLI, consider reverting to an older version by running:
-
-npm install -g netlify-cli@VERSION
-
-You can use any version from https://ntl.fyi/cli-versions.
-
-Please report this problem at https://ntl.fyi/cli-error including the error details below.
-
-
+(y/N) [1A[6D[82C[1B[2K[1A[2K[G? Would you like to "unlock" deployments for production context to proceed? 
+(y/N) [1A[6D[82C[1B[2K[1A[2K[G? Would you like to "unlock" deployments for production context to proceed? 
+(y/N) [1A[6D[82C[1B
