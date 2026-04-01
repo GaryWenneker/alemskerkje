@@ -89,118 +89,116 @@ export default function EventVideoHero({
       ].join('')
     : null
 
+  // Gedeelde knoppenrij (voor hergebruik op mobile + desktop)
+  const muteButton = (
+    <button
+      onClick={toggleMute}
+      className="flex items-center gap-1.5 bg-black/50 hover:bg-black/70 text-white
+                 text-xs px-3 py-2 rounded-full border border-white/10
+                 hover:border-amber-500/40 transition-all duration-200 backdrop-blur-sm"
+      aria-label={muted ? 'Geluid inschakelen' : 'Geluid uitschakelen'}
+    >
+      {muted ? (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden="true">
+          <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 0 0 1.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06ZM17.78 9.22a.75.75 0 1 0-1.06 1.06L18.44 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 1 0 1.06-1.06L20.56 12l1.72-1.72a.75.75 0 1 0-1.06-1.06l-1.72 1.72-1.72-1.72Z" />
+        </svg>
+      ) : (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden="true">
+          <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 0 0 1.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06ZM18.584 5.106a.75.75 0 0 1 1.06 0c3.808 3.807 3.808 9.98 0 13.788a.75.75 0 0 1-1.06-1.06 8.25 8.25 0 0 0 0-11.668.75.75 0 0 1 0-1.06Z" />
+          <path d="M15.932 7.757a.75.75 0 0 1 1.061 0 6 6 0 0 1 0 8.486.75.75 0 0 1-1.06-1.061 4.5 4.5 0 0 0 0-6.364.75.75 0 0 1 0-1.06Z" />
+        </svg>
+      )}
+      <span className="hidden sm:inline">{muted ? 'Geluid aan' : 'Geluid uit'}</span>
+    </button>
+  )
+
   return (
-    <div className="relative w-full aspect-[3/4] sm:aspect-[4/3] md:aspect-video overflow-hidden bg-stone-950 group">
+    <section className="w-full bg-stone-950">
 
-      {/* ── VIDEO ── */}
-      {videoType === 'youtube' && embedSrc && (
-        <iframe
-          ref={iframeRef}
-          src={embedSrc}
-          className="absolute inset-0 w-full h-full border-0 pointer-events-none z-0"
-          allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          title={title}
-        />
-      )}
-      {videoType === 'direct' && (
-        <video
-          ref={videoRef}
-          src={videoUrl}
-          className="absolute inset-0 w-full h-full object-cover z-0"
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
-      )}
+      {/* VIDEO CONTAINER — altijd 16:9, YouTube vult dit perfect */}
+      <div className="relative w-full aspect-video overflow-hidden bg-stone-950 group">
 
-      {/* ── BOVEN: gradient + titel ── */}
-      <div className="video-overlay-top absolute top-0 left-0 right-0 z-10 h-[42%] pointer-events-none">
-        <div className="pt-5 sm:pt-7 px-5 sm:px-8 md:px-12">
-          <p className="section-label mb-1 [text-shadow:0_1px_8px_rgba(0,0,0,1)]">
-            Evenement
-          </p>
-          <h2 className="font-serif text-xl sm:text-2xl md:text-4xl lg:text-5xl text-white leading-tight max-w-3xl
-                         [text-shadow:0_2px_8px_rgba(0,0,0,1),0_4px_24px_rgba(0,0,0,0.85),0_8px_48px_rgba(0,0,0,0.6)]">
-            {title}
-          </h2>
+        {/* ── VIDEO ── */}
+        {videoType === 'youtube' && embedSrc && (
+          <iframe
+            ref={iframeRef}
+            src={embedSrc}
+            className="absolute inset-0 w-full h-full border-0 pointer-events-none z-0"
+            allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            title={title}
+          />
+        )}
+        {videoType === 'direct' && (
+          <video
+            ref={videoRef}
+            src={videoUrl}
+            className="absolute inset-0 w-full h-full object-cover z-0"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        )}
+
+        {/* ── MOBILE: subtiele label bovenin ── */}
+        <div className="md:hidden absolute top-0 left-0 right-0 z-10 pt-3 px-4 pointer-events-none
+                        bg-gradient-to-b from-black/70 to-transparent pb-8">
+          <p className="text-amber-500 text-[10px] tracking-[0.3em] uppercase font-light">Evenement</p>
         </div>
-      </div>
 
-      {/* ── ONDER: gradient + datum/knoppen ── */}
-      <div className="video-overlay-bottom absolute bottom-0 left-0 right-0 z-10 h-auto flex flex-col justify-end">
-        <div className="pb-4 sm:pb-6 px-5 sm:px-8 md:px-12 flex flex-col gap-3">
+        {/* ── DESKTOP: gradient + titel (boven) ── */}
+        <div className="hidden md:block video-overlay-top absolute top-0 left-0 right-0 z-10 h-[42%] pointer-events-none">
+          <div className="pt-7 px-12">
+            <p className="section-label mb-1 [text-shadow:0_1px_8px_rgba(0,0,0,1)]">Evenement</p>
+            <h2 className="font-serif text-4xl lg:text-5xl text-white leading-tight max-w-3xl
+                           [text-shadow:0_2px_8px_rgba(0,0,0,1),0_4px_24px_rgba(0,0,0,0.85),0_8px_48px_rgba(0,0,0,0.6)]">
+              {title}
+            </h2>
+          </div>
+        </div>
 
-          {/* Datum · Tijd · Locatie */}
-          <div className="flex flex-wrap gap-3 sm:gap-5">
-            <div>
-              <p className="text-[9px] sm:text-[10px] tracking-widest uppercase text-stone-400 mb-0.5">Datum</p>
-              <p className="text-white text-xs sm:text-sm capitalize">{formattedDate}</p>
-            </div>
-            {(timeStart || timeEnd) && (
+        {/* ── DESKTOP: gradient + datum/knoppen (onder) ── */}
+        <div className="hidden md:flex video-overlay-bottom absolute bottom-0 left-0 right-0 z-10 h-auto flex-col justify-end">
+          <div className="pb-6 px-12 flex flex-col gap-3">
+            <div className="flex flex-wrap gap-5">
               <div>
-                <p className="text-[9px] sm:text-[10px] tracking-widest uppercase text-stone-400 mb-0.5">Tijd</p>
-                <p className="text-amber-400 text-xs sm:text-sm">
-                  {timeStart}
-                  {timeEnd && <span className="text-stone-400"> – {timeEnd}</span>}
-                </p>
+                <p className="text-[10px] tracking-widest uppercase text-stone-400 mb-0.5">Datum</p>
+                <p className="text-white text-sm capitalize">{formattedDate}</p>
               </div>
-            )}
-            {location && (
-              <div className="hidden md:block">
-                <p className="text-[10px] tracking-widest uppercase text-stone-400 mb-0.5">Locatie</p>
-                <p className="text-white text-sm">{location}</p>
-              </div>
-            )}
-          </div>
-
-          {/* Knoppen + geluid */}
-          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-            <button
-              onClick={toggleMute}
-              className="flex items-center gap-1.5 bg-black/50 hover:bg-black/70 text-white
-                         text-xs px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full border border-white/10
-                         hover:border-amber-500/40 transition-all duration-200 backdrop-blur-sm"
-              aria-label={muted ? 'Geluid inschakelen' : 'Geluid uitschakelen'}
-            >
-              {muted ? (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden="true">
-                  <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 0 0 1.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06ZM17.78 9.22a.75.75 0 1 0-1.06 1.06L18.44 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 1 0 1.06-1.06L20.56 12l1.72-1.72a.75.75 0 1 0-1.06-1.06l-1.72 1.72-1.72-1.72Z" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden="true">
-                  <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 0 0 1.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06ZM18.584 5.106a.75.75 0 0 1 1.06 0c3.808 3.807 3.808 9.98 0 13.788a.75.75 0 0 1-1.06-1.06 8.25 8.25 0 0 0 0-11.668.75.75 0 0 1 0-1.06Z" />
-                  <path d="M15.932 7.757a.75.75 0 0 1 1.061 0 6 6 0 0 1 0 8.486.75.75 0 0 1-1.06-1.061 4.5 4.5 0 0 0 0-6.364.75.75 0 0 1 0-1.06Z" />
-                </svg>
+              {(timeStart || timeEnd) && (
+                <div>
+                  <p className="text-[10px] tracking-widest uppercase text-stone-400 mb-0.5">Tijd</p>
+                  <p className="text-amber-400 text-sm">
+                    {timeStart}
+                    {timeEnd && <span className="text-stone-400"> – {timeEnd}</span>}
+                  </p>
+                </div>
               )}
-              <span className="hidden sm:inline">{muted ? 'Geluid aan' : 'Geluid uit'}</span>
-            </button>
-
-            {ticketUrl && (
-              <button
-                type="button"
-                onClick={() => setTicketOpen(true)}
-                className="btn-gold py-1.5 sm:py-2 px-4 sm:px-5 text-xs"
-              >
-                Kaarten bestellen
-              </button>
-            )}
-            {hasInfo && (
-              <button
-                type="button"
-                onClick={() => setPanelOpen(true)}
-                className="btn-ghost py-1.5 sm:py-2 px-4 sm:px-5 text-xs"
-              >
-                Meer info
-              </button>
-            )}
+              {location && (
+                <div>
+                  <p className="text-[10px] tracking-widest uppercase text-stone-400 mb-0.5">Locatie</p>
+                  <p className="text-white text-sm">{location}</p>
+                </div>
+              )}
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              {muteButton}
+              {ticketUrl && (
+                <button type="button" onClick={() => setTicketOpen(true)} className="btn-gold py-2 px-5 text-xs">
+                  Kaarten bestellen
+                </button>
+              )}
+              {hasInfo && (
+                <button type="button" onClick={() => setPanelOpen(true)} className="btn-ghost py-2 px-5 text-xs">
+                  Meer info
+                </button>
+              )}
+            </div>
           </div>
-
         </div>
-      </div>
 
-      {/* ── HOVER-LABEL (rechts) ── */}
-      {hasInfo && (
+        {/* ── DESKTOP: hover-label (rechts) ── */}
+        {hasInfo && (
         <button
           type="button"
           onClick={() => setPanelOpen(true)}
@@ -311,6 +309,41 @@ export default function EventVideoHero({
           eventTitle={title}
         />
       )}
-    </div>
+      </div>{/* einde video container */}
+
+      {/* ── MOBILE: content onder de video ── */}
+      <div className="md:hidden px-5 py-5 border-t border-stone-800/40 flex flex-col gap-4">
+        <h2 className="font-serif text-xl leading-tight text-white">{title}</h2>
+        <div className="flex flex-wrap gap-4">
+          <div>
+            <p className="text-[9px] tracking-widest uppercase text-stone-400 mb-0.5">Datum</p>
+            <p className="text-white text-sm capitalize">{formattedDate}</p>
+          </div>
+          {(timeStart || timeEnd) && (
+            <div>
+              <p className="text-[9px] tracking-widest uppercase text-stone-400 mb-0.5">Tijd</p>
+              <p className="text-amber-400 text-sm">
+                {timeStart}
+                {timeEnd && <span className="text-stone-400"> – {timeEnd}</span>}
+              </p>
+            </div>
+          )}
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          {muteButton}
+          {ticketUrl && (
+            <button type="button" onClick={() => setTicketOpen(true)} className="btn-gold py-2 px-5 text-xs">
+              Kaarten bestellen
+            </button>
+          )}
+          {hasInfo && (
+            <button type="button" onClick={() => setPanelOpen(true)} className="btn-ghost py-2 px-5 text-xs">
+              Meer info
+            </button>
+          )}
+        </div>
+      </div>
+
+    </section>
   )
 }
